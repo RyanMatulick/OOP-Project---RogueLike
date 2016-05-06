@@ -1,0 +1,26 @@
+RogueLike - 
+
+Main Functionalities: --------
+player: --
+can move around on a map
+can interact with environment/objects/enemies
+Ascii Graphics - Color
+
+enemies: --
+random movement.
+can attack player if adjacent
+
+Objects: --
+item pick ups potions/keys
+store in player inventory
+
+features: --
+Win condition - to reach exit/find item.
+Lose - Run out of HP
+
+Cool Extensions: --------
+enemies that path to player
+field of vision/save map 
+random map generation
+Move speeds/iteraction times
+

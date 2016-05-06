@@ -1,0 +1,72 @@
+
+
+program flow:
+Generate player
+for every floor of the dungeon:
+	GenerateMap
+	while player is alive Update game state
+	if player dies display end message
+	play again?
+	
+update flow:
+	Update cells for Characters and items
+	Get Player input
+	For Each enemy Get Enemies Turn
+
+
+
+
+
+
+
+
+
+
+
+Class functions and variables
+
+Character:----------------------------------------------------------------------
+	public:
+		Character(int position, string name, string class, int health, int AttackDamage);
+		Move(char direction);
+		GetLocation();
+		Getters & setters;
+		Attack();
+	private:
+		string name;
+		string class;
+		int Health;
+		int AttackDamage;
+		int pos[2];
+
+	Player:-------------
+		#include "Item.h"
+		Getintput();
+		interact();
+		UseItem();
+		CheckInventory();
+		PickUp(); // If not full, pick up item.
+		Item * Inventory[5];
+
+	Enemies:------------
+		
+		GenerateMove();
+
+Item:--------------------------------------------------------------------------
+	Use();
+
+
+
+	Potion:
+	Use();
+	
+	Key:
+	Use();
+	
+Map: -------------------------------------------------------------------------
+	GenerateMap(); // occurs once per room
+	MapUpdate(); // update current map from enemy and player inputs
+	DrawMap(); // occurs after player input
+	
+	char * Map[80,20];
+	
