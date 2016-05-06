@@ -1,5 +1,7 @@
 //map.h
 
+#ifndef MAP_H
+#define MAP_H
 using namespace std;
 
 class map
@@ -13,5 +15,6 @@ public:
     ~map();
 
 private:
-    char * Map[80,20];
-}
+    char * Map[80][20];
+};
+#endif
