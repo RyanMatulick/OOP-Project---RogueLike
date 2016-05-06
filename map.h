@@ -9,12 +9,16 @@ class map
 public:
 
     map();
-    void GenerateMap(); // occurs once per room
-    void MapUpdate(); // update current map from enemy and player inputs
-    void DrawMap(); // occurs after player input
+    void generateMap(); // occurs once per room
+    void mapUpdate(); // update current map from enemy and player inputs. needs input of current player position?
+    void drawMap(); // occurs after player input
+    char * getMapPtr();
     ~map();
 
+
 private:
-    char * Map[80][20];
+    char * Map[20][80];
+    int generateRandomNumber();
+    void initializeMap(); //fill map with blanks
 };
 #endif

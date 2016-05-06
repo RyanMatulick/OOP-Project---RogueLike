@@ -1,10 +1,13 @@
 #include <iostream>
 #include "map.h"
-//#include "map.cpp"
+#include "map.cpp"
 
 using namespace std;
 
 int main()
 {
-    cout << "boo!" << endl;
+    map * theMap;
+    theMap = new map();
+    theMap->generateMap();
+    theMap->drawMap();
 }
