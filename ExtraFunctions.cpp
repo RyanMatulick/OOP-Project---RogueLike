@@ -1,7 +1,11 @@
 #include <iostream>
 #include <unistd.h>   //_getch
 #include <termios.h>  //_getch
+#include <cstdio> // getch
+#include <cstdlib> // clear screen
+
 char getch();
+void clear_screen();
 
 using namespace std;
 
@@ -9,6 +13,9 @@ int main()
 {
 	char Answer = getch();
 	cout << "You're input is: " << Answer << endl;
+	char Answer2 = getch();
+	clear_screen();
+	cout << "You're input is: " << Answer2 << endl;
 }
 
 
@@ -33,3 +40,14 @@ char getch(){
         perror ("tcsetattr ~ICANON");
     return buf;
  }
+
+
+void clear_screen()
+{
+#ifdef WINDOWS
+    std::system("cls");
+#else
+    // Assume POSIX
+    std::system ("clear");
+#endif
+}
