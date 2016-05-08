@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "character.h"
+
 
 using namespace std;
 
@@ -130,8 +132,17 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 
 }
 
-void map::mapUpdate()
+//This is the upadate for all Objects (Characters,Items,Traps etc.) on the map
+void map::mapUpdate(character * Character )
 {
+	//Repeat for every Character on the map. currently static 1;
+	// will have to iterate through an array of characters
+	for(int i = 0; i< 1; i++)
+	{
+		TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
+		Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
+		TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
+	}
 
 }
 
@@ -147,13 +158,13 @@ void map::drawMap()
 	}
 }
 
-void map::printTestMap() // TEMP
+void map::printTestRoom() // TEMP
 {
 	for (int i = 0; i<20; i++)
 	{
 		for (int j = 0; j<40; j++)
 		{
-			cout << TestMap[i][j];
+			cout << TestRoom[i][j];
 		}
 		cout << endl;
 	}
@@ -173,5 +184,5 @@ int map::generateRandomNumber()
 
 map::~map()
 {
-	delete Map;
+	delete [] Map;
 }
