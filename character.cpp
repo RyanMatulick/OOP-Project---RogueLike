@@ -1,56 +1,90 @@
 #include "character.h"
+#include "map.h"
 #include "OS_Functions.h"
-#include<iostream>
+
+#include <iostream>
+#include <string>
+
+using namespace std;
 character::character(char iSymbol, int ixLocation, int iyLocation)
 {
 	Symbol = iSymbol;
-	GroundSymbol = 'X';
+	GroundSymbol = 'X'; // Will be placed underneath where the character is initialised
 
 	xNext = ixLocation;
 	xCurrent = ixLocation;
 	yNext = iyLocation;
 	yCurrent = iyLocation;
+	TurnCount = 0;
+	CharacterState = "Alive";
 	
 }
-using namespace std;
 
-void character::getTurn()
+
+void character::getTurn(map *Map) // will change to room Need to put in a player class
 {
 	char Move = getKey();
 	yCurrent = yNext;
 	xCurrent = xNext;
-	//std::cout << "Player Move : " << Move << std::endl;
 	switch (Move)
 	{
-	case 'w': // Move Up
-		yNext--; 
-		break; 
+	case 72: // Move Up
+		if (Map->getTestRoomcell(xCurrent, yNext - 1) != '#') // if the player doesn't hit a wall
+		{ 
+			TurnCount++;
+			yNext--;
+			break;
+		}  
+		cout << "Can't Move there" << endl; // if they hit a wall display message and get another input.
+		getTurn(Map);
+		break;
+	case 80: // Move Down
+		if (Map->getTestRoomcell(xCurrent, yNext + 1) != '#') 
+		{ 
+			yNext++; 
+			TurnCount++;
+			break;
+		} 
+		cout << "Can't Move there" << endl;
+		getTurn(Map);
+		break;
 
-	case 's': // Move Down
-		yNext++;
-		break; 
-
-	case 'a': // Move Left
-		xNext--;
+	case 75: // Move Left
+		if (Map->getTestRoomcell(xNext - 1, yCurrent) != '#') 
+		{
+			xNext--;
+			TurnCount++;
+			break;
+		}
+		cout << "Can't Move there" << endl;
+		getTurn(Map);
 		break;
 		
-	case 'd': // Move Right
-		xNext++;
+	case 77: // Move Right
+		if (Map->getTestRoomcell(xNext + 1, yCurrent) != '#') 
+		{
+			xNext++; 
+			TurnCount++;
+			break;
+		} 
+		cout << "Can't Move there" << endl;
+		getTurn(Map);
+		break;
+	case 'd': 
+		CharacterState = "Dead";
 		break;
 		
 	default: break;
 	}
-	cout << "Current Position: (" << xCurrent << "," << yCurrent << ")" << endl;
-	cout << "Next Position: (" << xNext << "," << yNext << ")" << endl;
 }
 
 
+// getters and setters -----------------------------------------------------------
+string character::getState()
+{
+	return CharacterState;
+}
 
-
-
-
-
-// getters and setters ---------------------------
 char character::getSymbol()
 {
 	return Symbol;
@@ -80,6 +114,11 @@ int character::getNextY()
 	return yNext;
 }
 
+void character::setState(string State)
+{
+	CharacterState = State;
+}
+
 void character::setGroundSymbol(char iSymbol)
 {
 	GroundSymbol = iSymbol;
@@ -104,7 +143,7 @@ void character::setNextY(int iyLocation)
 	yNext = iyLocation;
 }
 
-//--------------------------------------
+//-------------------------------------------------------------------------------------------------
 
 
 

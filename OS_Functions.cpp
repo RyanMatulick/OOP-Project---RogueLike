@@ -9,6 +9,7 @@
 // Universal Includes
 #include <iostream>
 
+
 char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
 #ifdef WIN32
 
@@ -44,3 +45,4 @@ void clear_screen()
 	std::system("clear");
 #endif
 }
+

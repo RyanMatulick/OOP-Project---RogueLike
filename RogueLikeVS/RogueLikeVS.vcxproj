@@ -153,7 +153,7 @@
     <ClCompile Include="..\character.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\map.cpp" />
-    <ClCompile Include="OS_Functions.cpp" />
+    <ClCompile Include="..\OS_Functions.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

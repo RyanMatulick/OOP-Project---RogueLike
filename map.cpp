@@ -132,19 +132,7 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 
 }
 
-//This is the upadate for all Objects (Characters,Items,Traps etc.) on the map
-void map::mapUpdate(character * Character )
-{
-	//Repeat for every Character on the map. currently static 1;
-	// will have to iterate through an array of characters
-	for(int i = 0; i< 1; i++)
-	{
-		TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
-		Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
-		TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
-	}
 
-}
 
 void map::drawMap()
 {
@@ -158,17 +146,6 @@ void map::drawMap()
 	}
 }
 
-void map::printTestRoom() // TEMP
-{
-	for (int i = 0; i<20; i++)
-	{
-		for (int j = 0; j<40; j++)
-		{
-			cout << TestRoom[i][j];
-		}
-		cout << endl;
-	}
-}
 
 char * map::getMapPtr()
 {
@@ -179,6 +156,38 @@ char * map::getMapPtr()
 int map::generateRandomNumber()
 {
 	return (rand() % 8 + 1); //return a number between 1 and 8
+}
+
+
+//Ryan's stuff
+//This is the upadate for all Objects (Characters,Items,Traps etc.) on the map
+void map::mapUpdate(character * Character)
+{
+	//Repeat for every Character on the map. currently static 1;
+	// will have to iterate through an array of characters
+	for (int i = 0; i< 1; i++)
+	{
+		TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
+		Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
+		TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
+	}
+}
+
+char map::getTestRoomcell(int x, int y) // some form of this is needed to check for collisions and enemies in adjacent squares
+{
+	return TestRoom[y][x];
+}
+
+void map::printTestRoom() // TEMP Show jack the skits stuff 
+{
+	for (int i = 0; i<10; i++)
+	{
+		for (int j = 0; j<10; j++)
+		{
+			cout << TestRoom[i][j];
+		}
+		cout << endl;
+	}
 }
 
 

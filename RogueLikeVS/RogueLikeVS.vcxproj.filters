@@ -41,7 +41,7 @@
     <ClCompile Include="..\character.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="OS_Functions.cpp">
+    <ClCompile Include="..\OS_Functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
