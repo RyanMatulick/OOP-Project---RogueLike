@@ -10,10 +10,12 @@
 using namespace std;
 
 char * Map[10][10];
+room * rMap[10][10];
 
 map::map(int inWidth, int inHeight)
 {
-	srand(time(NULL)); //seed the random number generator
+	//srand(time(NULL)); //seed the random number generator
+	srand(5);
 	width=inWidth;
 	height = inHeight;
 	numberOfRooms=0;
@@ -25,23 +27,23 @@ void map::initializeMap() // initalize Map with blanks
 	{
 		for(int j=0; j<height; j++)
 		{
-			Map[i][j] = " ";
+			*Map[i][j] = ' ';
 		}
 	}
 
 	int firstCell = rand()%width; //place # in a random cell in the top row
-	Map[0][firstCell] = "#";
+	*Map[0][firstCell] = '#';
 
 	for(int k = firstCell+1; k<width; k++) //fill out top row from the first cell
 	{
 
 		if(generateRandomNumber()>3 && Map[0][k-1]=="#")
 		{
-			Map[0][k] = "#";
+			*Map[0][k] = '#';
 			numberOfRooms++;
 		}
 		else
-			Map[0][k] = " ";
+			*Map[0][k] = ' ';
 	}
 }
 
@@ -60,8 +62,9 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j-1]=="#")||(Map[i-1][j]=="#"))) //if a cell to the top or left of the current is a room, possibly v=create a new room
 				{
-					  Map[i][j] = "#";
+					  *Map[i][j] = '#';
 					  numberOfRooms++;
+					  rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 
 			}
@@ -69,8 +72,9 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && (Map[i-1][j]=="#"))
 				{
-					Map[i][j] = "#";
+					*Map[i][j] = '#';
 					numberOfRooms++;
+					rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 
 			}
@@ -78,8 +82,9 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j+1]=="#") || (Map[i+1][j]=="#")))
 				   {
-					   Map[i][j] = "#";
+					   *Map[i][j] = '#';
 					   numberOfRooms++;
+					   rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				   }
 			}
 
@@ -102,21 +107,23 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j-1]=="#")||(Map[i-1][j]=="#"))) //if a cell to the top or left of the current is a room, possibly v=create a new room
 				{
-					  Map[i][j] = "#";
+					  *Map[i][j] = '#';
 					  numberOfRooms++;
+					  rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 				else
-					Map[i][j] = " ";
+					*Map[i][j] = ' ';
 			}
 			else
 			{
 				if(generateRandomNumber()>3 && (Map[i-1][j]=="#"))
 				{
-					Map[i][j] = "#";
+					*Map[i][j] = '#';
 					numberOfRooms++;
+					rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 				else
-					Map[i][j] = " ";
+					*Map[i][j] = ' ';
 			}
 
 		}
@@ -127,6 +134,7 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 	{
 		fillMap();
 	}
+
 
 }
 
@@ -146,7 +154,7 @@ void map::drawMap()
 		cout << endl;
 	}
 }
-
+/*
 void map::printTestMap() // TEMP
 {
 	for (int i = 0; i<20; i++)
@@ -158,6 +166,7 @@ void map::printTestMap() // TEMP
 		cout << endl;
 	}
 }
+*/
 
 char * map::getMapPtr()
 {
