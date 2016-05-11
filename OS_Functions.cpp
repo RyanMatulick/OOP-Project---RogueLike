@@ -1,20 +1,24 @@
-#ifdef _WIN32 // If we are on windows include this stuff only
+#ifdef _WIN32
 #include <conio.h>
+#include <cstdlib>
 #endif
-
 #ifdef linux // if we are on linux include this
 #include <unistd.h>
 #include <stdlib.h>
 #endif
+
 // Universal Includes
 #include <iostream>
 
 
-char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
-#ifdef WIN32
 
+
+
+char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
+#if _WIN32
 	return _getch();
-#else
+#endif
+#ifdef linux
 	char buf = 0;
 	struct termios old = { 0 };
 	fflush(stdout);
@@ -40,7 +44,8 @@ void clear_screen()
 {
 #ifdef WIN32
 	std::system("cls");
-#else
+#endif // WIN32
+#ifdef linux
 	// Linux
 	std::system("clear");
 #endif

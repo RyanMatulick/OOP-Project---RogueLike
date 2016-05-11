@@ -27,23 +27,23 @@ void map::initializeMap() // initalize Map with blanks
 	{
 		for(int j=0; j<height; j++)
 		{
-			Map[i][j] = " ";
+			*(Map[i][j]) = ' ';
 		}
 	}
 
 	int firstCell = rand()%width; //place # in a random cell in the top row
-	Map[0][firstCell] = "#";
+	*Map[0][firstCell] = '#';
 
 	for(int k = firstCell+1; k<width; k++) //fill out top row from the first cell
 	{
 
 		if(generateRandomNumber()>3 && Map[0][k-1]=="#")
 		{
-			Map[0][k] = "#";
+			*Map[0][k] = '#';
 			numberOfRooms++;
 		}
 		else
-			Map[0][k] = " ";
+			*Map[0][k] = ' ';
 	}
 }
 
@@ -62,7 +62,7 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j-1]=="#")||(Map[i-1][j]=="#"))) //if a cell to the top or left of the current is a room, possibly v=create a new room
 				{
-					  Map[i][j] = "#";
+					  *Map[i][j] = '#';
 					  numberOfRooms++;
 				}
 
@@ -71,7 +71,7 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && (Map[i-1][j]=="#"))
 				{
-					Map[i][j] = "#";
+					*Map[i][j] = '#';
 					numberOfRooms++;
 				}
 
@@ -80,7 +80,7 @@ void map::fillMap()
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j+1]=="#") || (Map[i+1][j]=="#")))
 				   {
-					   Map[i][j] = "#";
+					   *Map[i][j] = '#';
 					   numberOfRooms++;
 				   }
 			}
@@ -92,7 +92,7 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 {
 	initializeMap();
 
-	//# in the map represent rooms, " " are not rooms
+	//# in the map represent rooms, ' ' are not rooms
 	//algorithm fills up the map with randomly generated rooms that touch
 	//each other- no isolated rooms
 
@@ -104,21 +104,21 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 			{
 				if(generateRandomNumber()>3 && ((Map[i][j-1]=="#")||(Map[i-1][j]=="#"))) //if a cell to the top or left of the current is a room, possibly v=create a new room
 				{
-					  Map[i][j] = "#";
+					  *Map[i][j] = '#';
 					  numberOfRooms++;
 				}
 				else
-					Map[i][j] = " ";
+					*Map[i][j] = ' ';
 			}
 			else
 			{
 				if(generateRandomNumber()>3 && (Map[i-1][j]=="#"))
 				{
-					Map[i][j] = "#";
+					*Map[i][j] = '#';
 					numberOfRooms++;
 				}
 				else
-					Map[i][j] = " ";
+					*Map[i][j] = ' ';
 			}
 
 		}
@@ -178,7 +178,7 @@ char map::getTestRoomcell(int x, int y) // some form of this is needed to check 
 	return TestRoom[y][x];
 }
 
-void map::printTestRoom() // TEMP Show jack the skits stuff 
+void map::printTestRoom() // TEMP Show jack the skits stuff
 {
 	for (int i = 0; i<10; i++)
 	{

@@ -17,7 +17,7 @@ character::character(char iSymbol, int ixLocation, int iyLocation)
 	yCurrent = iyLocation;
 	TurnCount = 0;
 	CharacterState = "Alive";
-	
+
 }
 
 
@@ -29,28 +29,28 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 	switch (Move)
 	{
 	case 72: // Move Up
-		if (Map->getTestRoomcell(xCurrent, yNext - 1) != '#') // if the player doesn't hit a wall
-		{ 
+		if (Map->getTestRoomcell(xCurrent, yNext - 1) != '#' && yNext >0) // if the player doesn't hit a wall
+		{
 			TurnCount++;
 			yNext--;
 			break;
-		}  
+		}
 		cout << "Can't Move there" << endl; // if they hit a wall display message and get another input.
 		getTurn(Map);
 		break;
 	case 80: // Move Down
-		if (Map->getTestRoomcell(xCurrent, yNext + 1) != '#') 
-		{ 
-			yNext++; 
+		if (Map->getTestRoomcell(xCurrent, yNext + 1) != '#' && yNext <10-1)
+		{
+			yNext++;
 			TurnCount++;
 			break;
-		} 
+		}
 		cout << "Can't Move there" << endl;
 		getTurn(Map);
 		break;
 
 	case 75: // Move Left
-		if (Map->getTestRoomcell(xNext - 1, yCurrent) != '#') 
+		if (Map->getTestRoomcell(xNext - 1, yCurrent) != '#' && xNext > 0)
 		{
 			xNext--;
 			TurnCount++;
@@ -59,21 +59,21 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		cout << "Can't Move there" << endl;
 		getTurn(Map);
 		break;
-		
+
 	case 77: // Move Right
-		if (Map->getTestRoomcell(xNext + 1, yCurrent) != '#') 
+		if (Map->getTestRoomcell(xNext + 1, yCurrent) != '#' && xNext <10-1)
 		{
-			xNext++; 
+			xNext++;
 			TurnCount++;
 			break;
-		} 
+		}
 		cout << "Can't Move there" << endl;
 		getTurn(Map);
 		break;
-	case 'd': 
+	case 'd':
 		CharacterState = "Dead";
 		break;
-		
+
 	default: break;
 	}
 }

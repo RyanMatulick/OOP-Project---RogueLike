@@ -9,7 +9,7 @@ class character;
 class map
 {
 public:
-	
+
 	map(int inWidth, int inHeight);
 	void generateMap(); // occurs once per room
 	void mapUpdate(character * Character); // update current map from enemy and player inputs. needs input of current player position?
@@ -32,25 +32,24 @@ private:
 	//number of rooms high and wide the map is
 	int width;
 	int height;
-	
+
 
 	int numberOfRooms; //number of rooms in the map. count for purpos of ensuring their are sufficient rooms
-	
-	//TEMP   
+
+	//TEMP
 	//Only until jack has an awesome random generator! but will be useful for testing.
-	char TestRoom[10][10] = { 
-	{ '.', '.', '.', '.', '.', '#', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
-	{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',}};
-	
-	
+	char TestRoom[10][10] = {{'.', '.', '.', '.', '.', '#', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',},
+                            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',}};
+
+
 };
 
 
