@@ -9,9 +9,6 @@
 
 using namespace std;
 
-char * Map[10][10];
-room * rMap[10][10];
-
 map::map(int inWidth, int inHeight)
 {
 	//srand(time(NULL)); //seed the random number generator
@@ -23,17 +20,19 @@ map::map(int inWidth, int inHeight)
 
 void map::initializeMap() // initalize Map with blanks
 {
+    cout << "in Initialise" << endl;
 	for(int i=0; i<width; i++)
 	{
 		for(int j=0; j<height; j++)
 		{
-			*Map[i][j] = ' ';
+		    cout << "before assignment" << endl;
+		    Map[i][j] = " ";
 		}
 	}
-
+    cout << "Past loop 1" << endl;
 	int firstCell = rand()%width; //place # in a random cell in the top row
 	*Map[0][firstCell] = '#';
-
+    cout << "beofore loop 2" << endl;
 	for(int k = firstCell+1; k<width; k++) //fill out top row from the first cell
 	{
 
@@ -49,6 +48,7 @@ void map::initializeMap() // initalize Map with blanks
 
 void map::fillMap()
 {
+    cout << "IN Fill" << endl;
 	//# in the map represent rooms, " " are not rooms
 	//algorithm fills up the map with randomly generated rooms that touch
 	//each other- no isolated rooms
@@ -64,7 +64,7 @@ void map::fillMap()
 				{
 					  *Map[i][j] = '#';
 					  numberOfRooms++;
-					  rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
+					  //*rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 
 			}
@@ -74,7 +74,7 @@ void map::fillMap()
 				{
 					*Map[i][j] = '#';
 					numberOfRooms++;
-					rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
+					//*rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 
 			}
@@ -84,7 +84,7 @@ void map::fillMap()
 				   {
 					   *Map[i][j] = '#';
 					   numberOfRooms++;
-					   rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
+					  // *rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				   }
 			}
 
@@ -93,8 +93,9 @@ void map::fillMap()
 }
 void map::generateMap() //fill map array with # to represent rooms that exist
 {
+    cout << "In Generate" << endl;
 	initializeMap();
-
+    cout << "After Initilise" << endl;
 	//# in the map represent rooms, " " are not rooms
 	//algorithm fills up the map with randomly generated rooms that touch
 	//each other- no isolated rooms
@@ -109,7 +110,7 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 				{
 					  *Map[i][j] = '#';
 					  numberOfRooms++;
-					  rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
+					  //*rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 				else
 					*Map[i][j] = ' ';
@@ -120,7 +121,7 @@ void map::generateMap() //fill map array with # to represent rooms that exist
 				{
 					*Map[i][j] = '#';
 					numberOfRooms++;
-					rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
+					//*rMap[i][j] = new room(j,i, Map, height, width, numberOfRooms);
 				}
 				else
 					*Map[i][j] = ' ';

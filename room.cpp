@@ -5,7 +5,7 @@ using namespace std;
 room::room(int xPosIn, int yPosIn, char * worldMapIn[10][10], int height, int width, int roomNumberIn)
 {
     char * worldMap[10][10]; //copy of the map
-    char * roomMap[80][40]; //the rooms - what we actually draw
+    char * roomLayout[80][40]; //the rooms - what we actually draw
 
     xPos = xPosIn;
     yPos = yPosIn;
@@ -30,9 +30,10 @@ room::room(const room &old) //reinitialize everything when we copy rooms around
     {
         for(int j=0; j<40; j++)
         {
-            roomMap[i][j] = old.roomMap[i][j];
+            roomLayout[i][j] = old.roomLayout[i][j];
         }
     }
+
 
     for(int i=0; i<80;i++)
     {
@@ -54,11 +55,11 @@ void room::generateRoom()
         {
             if(i==0 || i==39 || j==0 || j==79)
             {
-                *roomMap[i][j]='#';
+                *roomLayout[i][j]='#';
             }
             else
             {
-                *roomMap[i][j]='.';
+                *roomLayout[i][j]='.';
             }
         }
     }
@@ -72,7 +73,7 @@ void room::drawRoom()
     {
         for(int j=0; j<80; j++)
         {
-            cout << roomMap[i][j];
+            cout << roomLayout[i][j];
         }
         cout << endl;
     }

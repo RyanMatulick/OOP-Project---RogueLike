@@ -4,6 +4,8 @@
 #define MAP_H
 using namespace std;
 
+#include "room.h"
+
 class map
 {
 public:
@@ -20,7 +22,7 @@ public:
 	//TEMP
 	void printTestMap(); // Displays the current static test map
 
-    room * rMap[10][10]; //actual map with room objects
+    room ** rMap[10][10]; //actual map with room objects
 
 
 

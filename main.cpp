@@ -17,7 +17,7 @@ int main()
 	theMap->generateMap();
 	theMap->drawMap();
 
-    rMap[1][6]->drawRoom();
+   // theMap->rMap[1][6]->drawRoom();
 
 	/* getKey Example
 	//char key = getKey();

@@ -15,7 +15,7 @@ public:
     int xPos, yPos; //map coordinates
     char * worldMap[10][10]; //copy of the map
 
-    char * roomMap[80][40]; //the rooms - what we actually draw
+    char * roomLayout[80][40]; //the rooms - what we actually draw
 
     int roomNumber;
 
