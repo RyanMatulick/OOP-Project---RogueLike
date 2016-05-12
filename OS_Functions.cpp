@@ -1,18 +1,15 @@
 #ifdef _WIN32
 #include <conio.h>
-#include <cstdlib>
 #endif
 #ifdef linux // if we are on linux include this
 #include <unistd.h>
 #include <stdlib.h>
+#include <termios.h>
 #endif
 
 // Universal Includes
 #include <iostream>
-
-
-
-
+#include <cstdlib>
 
 char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
 #if _WIN32

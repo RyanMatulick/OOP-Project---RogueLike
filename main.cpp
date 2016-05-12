@@ -8,7 +8,10 @@ void TestUpdate(map * Room);
 
 int main()
 {
+    map * TestMap;
+    TestMap = new map(2,3);
 	map * TestRoom;
+	TestMap->drawMap();
 	TestRoom = new map(10, 10);
 	TestUpdate(TestRoom);
 }
