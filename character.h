@@ -8,20 +8,23 @@ using namespace std;
 class character
 {
 private:
-	
-	char Symbol;
-	char GroundSymbol; // saves the symbol of the space the player is about to move onto;
+
+	int Symbol;
+	int GroundSymbol; // saves the symbol of the space the player is about to move onto;
 
 	int xCurrent;
 	int yCurrent;
 	int xNext;
 	int yNext;
 
+	int Health;
+	int AttackD;
+
 	string CharacterState;
-	
+
 
 public:
-	character(char Symbol, int xCurrent, int yCurrent);
+	character(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD);
 	void getTurn(map* Map); // change to room
 
 	string getState();

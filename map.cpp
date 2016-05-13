@@ -3,9 +3,6 @@
 //  #=wall  " "=blanck
 #include <iostream>
 #include "map.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "character.h"
 
 
@@ -66,16 +63,36 @@ char map::getTestRoomcell(int x, int y) // some form of this is needed to check 
 
 void map::printTestRoom() // TEMP Show jack the skits stuff
 {
-	for (int i = 0; i<width; i++)
+	for (int i = 0; i<height; i++)
 	{
-		for (int j = 0; j<height; j++)
+		for (int j = 0; j<width; j++)
 		{
-			cout << TestRoom[i][j];
+			cout << getCharacter(TestRoom[i][j]);
 		}
 		cout << endl;
 	}
 }
 
+char map::getCharacter(int Representation)
+{
+    switch(Representation)
+    {
+        case 1: return '.'; // ground floor
+        case 2: return '#'; // basic wall
+        case 10: return '@'; // Player symbol
+        case 100: return 'X'; // player start pos
+        default: return '?'; // has not been defined yet
+    }
+}
+
+int map::getWidth()
+{
+    return width;
+}
+int map::getHeight()
+{
+    return height;
+}
 
 map::~map()
 {

@@ -6,10 +6,13 @@
 #include <string>
 
 using namespace std;
-character::character(char iSymbol, int ixLocation, int iyLocation)
+character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, int iAttackD)
 {
 	Symbol = iSymbol;
-	GroundSymbol = 'X'; // Will be placed underneath where the character is initialised
+	GroundSymbol = 100; // Will be placed underneath where the character is initialised
+    Health = iHealth;
+    AttackD = iAttackD;
+
 
 	xNext = ixLocation;
 	xCurrent = ixLocation;
@@ -28,8 +31,8 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 	xCurrent = xNext;
 	switch (Move)
 	{
-	case 72: // Move Up
-		if (Map->getTestRoomcell(xCurrent, yNext - 1) != '#' && yNext >0) // if the player doesn't hit a wall
+	case 'w': // Move Up
+		if (Map->getTestRoomcell(xCurrent, yNext - 1) != 2 && yNext >0) // if the player doesn't hit a wall
 		{
 			TurnCount++;
 			yNext--;
@@ -38,8 +41,8 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		cout << "Can't Move there" << endl; // if they hit a wall display message and get another input.
 		getTurn(Map);
 		break;
-	case 80: // Move Down
-		if (Map->getTestRoomcell(xCurrent, yNext + 1) != '#' && yNext <10-1)
+	case 's': // Move Down
+		if (Map->getTestRoomcell(xCurrent, yNext + 1) != 2 && yNext <Map->getHeight()-1)
 		{
 			yNext++;
 			TurnCount++;
@@ -49,8 +52,8 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		getTurn(Map);
 		break;
 
-	case 75: // Move Left
-		if (Map->getTestRoomcell(xNext - 1, yCurrent) != '#' && xNext > 0)
+	case 'a': // Move Left
+		if (Map->getTestRoomcell(xNext - 1, yCurrent) != 2 && xNext > 0)
 		{
 			xNext--;
 			TurnCount++;
@@ -60,8 +63,8 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		getTurn(Map);
 		break;
 
-	case 77: // Move Right
-		if (Map->getTestRoomcell(xNext + 1, yCurrent) != '#' && xNext <10-1)
+	case 'd': // Move Right
+		if (Map->getTestRoomcell(xNext + 1, yCurrent) != 2 && xNext <Map->getWidth()-1)
 		{
 			xNext++;
 			TurnCount++;
@@ -70,7 +73,7 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		cout << "Can't Move there" << endl;
 		getTurn(Map);
 		break;
-	case 'd':
+	case 'p':
 		CharacterState = "Dead";
 		break;
 

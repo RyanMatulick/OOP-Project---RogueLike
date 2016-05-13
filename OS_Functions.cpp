@@ -1,10 +1,10 @@
 #ifdef _WIN32
 #include <conio.h>
-#endif
-#ifdef linux // if we are on linux include this
+#else// if we are on linux include this
 #include <unistd.h>
 #include <stdlib.h>
 #include <termios.h>
+#include <cstdio>
 #endif
 
 // Universal Includes
@@ -14,8 +14,7 @@
 char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
 #if _WIN32
 	return _getch();
-#endif
-#ifdef linux
+#else
 	char buf = 0;
 	struct termios old = { 0 };
 	fflush(stdout);
@@ -41,8 +40,7 @@ void clear_screen()
 {
 #ifdef WIN32
 	std::system("cls");
-#endif // WIN32
-#ifdef linux
+#else
 	// Linux
 	std::system("clear");
 #endif
