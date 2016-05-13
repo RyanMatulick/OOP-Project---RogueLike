@@ -25,7 +25,7 @@ protected:
 
 public:
 	character(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD);
-	void getTurn(map* Map); // change to room
+	virtual void getTurn(map* Map); // change to room
 
 	string getState();
 	char getSymbol();

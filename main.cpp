@@ -39,12 +39,11 @@ void TestUpdate(map * Room)
     {
         for (int i = 0; i<2; i++)
         {
-        CArray[i]->getTurn(Room);
-        clear_screen();
-        Room->mapUpdate(CArray[i]);
-        cout << "Once" << endl;
-        Room->printTestRoom();
-        cout << CArray[i]->TurnCount << endl;
+            CArray[i]->getTurn(Room);
+            clear_screen();
+            Room->mapUpdate(CArray[i]);
         }
+        Room->printTestRoom();
+        cout << CArray[0]->TurnCount << endl;
     }
 }

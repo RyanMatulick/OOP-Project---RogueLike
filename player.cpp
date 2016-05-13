@@ -61,7 +61,7 @@ void player::getTurn(map *Map) // will change to room Need to put in a player cl
 		CharacterState = "Dead";
 		break;
 
-	default: break;
+	default: getTurn(Map); break; // If Illegal key is pressed, get another.
 	}
 }
 
