@@ -1,6 +1,8 @@
 #include <iostream>
 #include "map.h"
 #include "character.h"
+#include "player.h"
+#include "enemy.h"
 #include "OS_Functions.h"
 #include <conio.h>
 #include <cstdlib>
@@ -21,16 +23,28 @@ int main()
 
 void TestUpdate(map * Room)
 {
-	character * Player = new character(10, 9, 7,50,12);
-	Room->mapUpdate(Player);
-	Room->printTestRoom();
-	while(Player->getState() != "Dead")
-	{
-		Player->getTurn(Room);
-		clear_screen();
-		Room->mapUpdate(Player);
-		cout << "Once" << endl;
-		Room->printTestRoom();
-		cout << Player->TurnCount << endl;
-	}
+	player * Player = new player(10, 9, 7,50,12);
+	enemy * Enemy = new enemy(10, 1, 1,50,12);
+	character * CArray[2];
+	CArray[0] = Player;
+	CArray[1] = Enemy;
+
+	for (int i = 0; i<2; i++)
+    {
+        Room->mapUpdate(CArray[i]);
+    }
+    Room->printTestRoom();
+
+    while(CArray[0]->getState() != "Dead")
+    {
+        for (int i = 0; i<2; i++)
+        {
+        CArray[i]->getTurn(Room);
+        clear_screen();
+        Room->mapUpdate(CArray[i]);
+        cout << "Once" << endl;
+        Room->printTestRoom();
+        cout << CArray[i]->TurnCount << endl;
+        }
+    }
 }

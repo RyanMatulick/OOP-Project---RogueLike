@@ -7,7 +7,7 @@ using namespace std;
 
 class character
 {
-private:
+protected:
 
 	int Symbol;
 	int GroundSymbol; // saves the symbol of the space the player is about to move onto;

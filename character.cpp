@@ -32,7 +32,7 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 	switch (Move)
 	{
 	case 'w': // Move Up
-		if (Map->getTestRoomcell(xCurrent, yNext - 1) != 2 && yNext >0) // if the player doesn't hit a wall
+		if (Map->getTestRoomcell(xCurrent, yNext - 1) != 2) // if the player doesn't hit a wall
 		{
 			TurnCount++;
 			yNext--;
@@ -42,7 +42,7 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		getTurn(Map);
 		break;
 	case 's': // Move Down
-		if (Map->getTestRoomcell(xCurrent, yNext + 1) != 2 && yNext <Map->getHeight()-1)
+		if (Map->getTestRoomcell(xCurrent, yNext + 1) != 2 )
 		{
 			yNext++;
 			TurnCount++;
@@ -53,7 +53,7 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		break;
 
 	case 'a': // Move Left
-		if (Map->getTestRoomcell(xNext - 1, yCurrent) != 2 && xNext > 0)
+		if (Map->getTestRoomcell(xNext - 1, yCurrent) != 2 )
 		{
 			xNext--;
 			TurnCount++;
@@ -64,7 +64,7 @@ void character::getTurn(map *Map) // will change to room Need to put in a player
 		break;
 
 	case 'd': // Move Right
-		if (Map->getTestRoomcell(xNext + 1, yCurrent) != 2 && xNext <Map->getWidth()-1)
+		if (Map->getTestRoomcell(xNext + 1, yCurrent) != 2 )
 		{
 			xNext++;
 			TurnCount++;
