@@ -6,40 +6,13 @@
 #include "character.h"
 
 
+
 using namespace std;
 
 map::map(int inWidth, int inHeight)
 {
 	width=inWidth;
 	height = inHeight;
-}
-
-void map::drawMap()
-{
-	for(int i =0; i<height; i++)
-	{
-	    for(int k = 0; k<10; k++) // TestRoom Height
-        {
-            for(int j = 0; j<width; j++)
-            {
-                if(TestMap[i][j] == 1)
-                {
-                   for (int l = 0; l<10; l++) // Test Room Width
-                    {
-                        cout << TestRoom[k][l];
-                    }
-
-                }
-                else
-                {
-                    string white = "XXXXXXXXXX";
-                    cout << white;
-                }
-
-            }
-             cout << endl;
-		}
-	}
 }
 
 //Ryan's stuff
@@ -80,6 +53,7 @@ char map::getCharacter(int Representation)
         case 1: return '.'; // ground floor
         case 2: return '#'; // basic wall
         case 10: return '@'; // Player symbol
+        case 20: return '&'; // Enemy Symbol
         case 100: return 'X'; // player start pos
         default: return '?'; // has not been defined yet
     }

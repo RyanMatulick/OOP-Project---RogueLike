@@ -17,15 +17,29 @@ protected:
 	int xNext;
 	int yNext;
 
-	int Health;
+    int Health;
 	int AttackD;
 
 	string CharacterState;
 
 
+	void Attack(character *Target);
+	bool Move(map *Map,character **Character,int inputX, int inputY);
+
+	enum MOVES
+    {
+        UP_INTERACTION,
+        DOWN_INTERACTION,
+        LEFT_INTERACTION,
+        RIGHT_INTERACTION,
+    };
+
+
 public:
-	character(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD);
-	virtual void getTurn(map* Map); // change to room
+    string Type;
+	character(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD,string Type);
+
+	void getTurn(map* Map, character **Character); // change to room
 
 	string getState();
 	char getSymbol();
