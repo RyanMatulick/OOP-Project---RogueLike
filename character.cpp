@@ -9,9 +9,15 @@ using namespace std;
 character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, int iAttackD,string iType)
 {
 	Symbol = iSymbol;
+<<<<<<< HEAD
 	GroundSymbol = 1; // Will be placed underneath where the character is initialised
     Health = iHealth;
     AttackD = iAttackD;
+=======
+	GroundSymbol = 100; // Will be placed underneath where the character is initialised
+	Health = iHealth;
+	AttackD = iAttackD;
+>>>>>>> origin/master
 
 
 	xNext = ixLocation;
@@ -25,6 +31,10 @@ character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, i
 }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
 {
 	MOVES Moves = NO_MOVE;

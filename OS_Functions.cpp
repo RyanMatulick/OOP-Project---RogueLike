@@ -10,7 +10,10 @@
 // Universal Includes
 #include <iostream>
 #include <cstdlib>
+<<<<<<< HEAD
 #include <ctime>
+=======
+>>>>>>> origin/master
 
 char getKey() { // can be used without assigning return value, e.g. getKey(); or char Key = getKey();
 #if _WIN32
