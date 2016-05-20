@@ -4,12 +4,16 @@
 #include "player.h"
 #include "enemy.h"
 #include "OS_Functions.h"
+
+#include <ctime>
+#include <stdlib.h>
 void TestUpdate(map * Room);
 
 int main()
 {
 	srand(time(NULL));
 	clear_screen();
+	system("mode 350"); // Windows Only
 
 	map * TestRoom;
 	TestRoom = new map(80, 30);
@@ -18,28 +22,32 @@ int main()
 
 void TestUpdate(map * Room)
 {
-	
+
 	Room->generateMap();
 
-	
-	
-	player * Player = new player(10,*(Room->getStartPos()+1),*(Room->getStartPos()),50,12);
+    int * PosArray;
+    PosArray = Room->getStartPos();
+	player * Player = new player(10,PosArray[1],PosArray[0],50,12);
 	int enemyNum = rand() % 7 + 3;
+	//int enemyNum = 3;
 	character * CArray[11];//maximum 10 enemies + player
 	CArray[0] = Player;
 
 	for (int i=0; i<enemyNum;i++)
 	{
-		enemy * Enemy = new enemy(20,*(Room->getStartPos()+1),*(Room->getStartPos()),50,12);
+	    PosArray = Room->getStartPos();
+	    cout << PosArray[0] << " " << PosArray[1] << endl;
+		enemy * Enemy = new enemy(20,PosArray[1],PosArray[0],50,12);
 		CArray[i+1] = Enemy;
 	}
 
-
+    cout << "Made all characters" << endl;
 
 	for (int i = 0; i<enemyNum+1; i++)
     {
         Room->mapUpdate(CArray[i]);
     }
+    cout << "updated the room" << endl;
     Room->printTestRoom(); //print first frame
 
 	while(Player->getState() != "Dead")

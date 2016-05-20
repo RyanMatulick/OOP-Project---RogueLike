@@ -3,6 +3,9 @@
 #include "map.h"
 #include "character.h"
 
+#include <stdlib.h>
+#include <ctime>
+
 
 using namespace std;
 
@@ -27,7 +30,7 @@ for (int j=0;j<30;j++)
 	{
 		tmap[j][i] = 0;
 	}
-}	
+}
 
 	int pos_x = rand() % (70+1-10) + 10;
 	int pos_y = rand() % (20+1-10) + 10;
@@ -37,7 +40,7 @@ for (int j=0;j<30;j++)
 	int roomsize_x, roomsize_y, dir;
 
 	bool dirset = false;
-	
+
 	bool goodmap = false;
 
 	int test1 = 0;
@@ -45,7 +48,7 @@ for (int j=0;j<30;j++)
 
 	while (goodmap == false) // whether rooms are across both sides of map
 	{
-		
+
 		while (rooms < 14)
 		{
 
@@ -187,7 +190,7 @@ for (int j=0;j<30;j++)
 				{
 					tmap[j][i] = 0;
 				}
-				
+
 			}
 		}
 		else
@@ -196,7 +199,7 @@ for (int j=0;j<30;j++)
 		}
 	}
 
-		
+
 	// walls
 	for (int j=0;j<30;j++)
 	{
@@ -229,18 +232,23 @@ for (int j=0;j<30;j++)
 int* map::getStartPos()
 {
 	int pos_x, pos_y,check;
-	int array[2] = {0,0};
+	check = 0;
+	static int posArray[2];
 	while (check != 1)
 	{
 		pos_x = rand() % 80;
 		pos_y = rand() % 30;
+		//cout << "1: " <<pos_x << " " << pos_y << endl;
+
 		check = TestRoom[pos_y][pos_x];
 	}
-	array[0] = pos_y;
-	array[1] = pos_x;
-	return &array[0];
+	//cout << "After Loop" << endl;
+	posArray[0] = pos_y;
+	posArray[1] = pos_x;
+	//cout << "2: " << array[0] << " " << array[1] << endl;
+	return posArray;
 
-	
+
 }
 
 

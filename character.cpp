@@ -50,8 +50,8 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		//Input = 5;
 		switch(Input)
 		{
-			case 1: Moves = UP_INTERACTION; break;   
-			case 2: Moves = DOWN_INTERACTION; break; 
+			case 1: Moves = UP_INTERACTION; break;
+			case 2: Moves = DOWN_INTERACTION; break;
 			case 3:  Moves = LEFT_INTERACTION; break;
 			case 4: Moves = RIGHT_INTERACTION; break;
 			default: break;
@@ -161,7 +161,7 @@ void character::Attack(character *Target)
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
-	if (Map->getTestRoomcell(inputX, inputY) != 2) // if the player doesn't hit a wall
+	if (Map->getTestRoomcell(inputX, inputY) < 2) // if the player doesn't hit a wall
 	{
 		TurnCount++; // we will either move or attack;
 		if(Map->getTestRoomcell(inputX, inputY) == Target) // if the next move is onto an enemy
