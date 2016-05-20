@@ -48,24 +48,24 @@ void map::printTestRoom() // TEMP Show jack the skits stuff
 
 char map::getCharacter(int Representation)
 {
-    switch(Representation)
-    {
-        case 1: return '.'; // ground floor
-        case 2: return '#'; // basic wall
-        case 10: return '@'; // Player symbol
-        case 20: return '&'; // Enemy Symbol
-        case 100: return 'X'; // player start pos
-        default: return '?'; // has not been defined yet
-    }
+	switch(Representation)
+	{
+		case 1: return '.'; // ground floor
+		case 2: return '#'; // basic wall
+		case 10: return '@'; // Player symbol
+		case 20: return '&'; // Enemy Symbol
+		case 100: return 'X'; // player start pos
+		default: return '?'; // has not been defined yet
+	}
 }
 
 int map::getWidth()
 {
-    return width;
+	return width;
 }
 int map::getHeight()
 {
-    return height;
+	return height;
 }
 
 map::~map()
