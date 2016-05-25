@@ -21,7 +21,7 @@ protected:
 	int AttackD; // Characters Attack Damage
 
 	string CharacterState; // Characters state
-    string Type; // Type of Character
+	string Type; // Type of Character
 
 	void Attack(character *Target); // Basic Attack Function
 	bool Move(map *Map,character **Character,int inputX, int inputY,int Target); // Move or Attack
@@ -34,7 +34,8 @@ protected:
 		RIGHT_INTERACTION,
 		NO_MOVE,
 	};
-
+	
+	int virtual Getinput(character *Player);
 
 public:
 

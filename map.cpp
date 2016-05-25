@@ -25,13 +25,13 @@ void map::generateMap()
 
 	int tmap[30][80];
 
-for (int j=0;j<30;j++)
-{
-	for (int i=0;i<80;i++)
+	for (int j=0;j<30;j++)
 	{
-		tmap[j][i] = 0;
+		for (int i=0;i<80;i++)
+		{
+			tmap[j][i] = 0;
+		}
 	}
-}
 
 	int pos_x = rand() % (70+1-10) + 10;
 	int pos_y = rand() % (20+1-10) + 10;
@@ -57,11 +57,11 @@ for (int j=0;j<30;j++)
 
 			roomsize_x = rand() % (8+1-2) + 2;
 			roomsize_y = rand() % (6+1-2) + 2;
-			while (roomsize_x > pos_x -1 or roomsize_x > 80 - pos_x -2)
+			while (roomsize_x > pos_x -1 || roomsize_x > 80 - pos_x -2)
 			{
 				roomsize_x -= 1;
 			}
-			while (roomsize_y > pos_y -1 or roomsize_y > 30 - pos_y -2)
+			while (roomsize_y > pos_y -1 || roomsize_y > 30 - pos_y -2)
 			{
 				roomsize_y -= 1;
 			}
@@ -181,7 +181,7 @@ for (int j=0;j<30;j++)
 				test2 += tmap[j][i];
 			}
 		}
-		if (test1<150 or test2<150)
+		if (test1<150 || test2<150)
 		{
 			goodmap = false;
 			rooms = 0;
@@ -260,7 +260,7 @@ void map::mapUpdate(character * Character)
 	//Repeat for every Character on the map. currently static 1;
 	// will have to iterate through an array of characters
 
-    TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
+	TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
 	Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
 	TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
 }
@@ -284,29 +284,29 @@ void map::printTestRoom() // TEMP Show jack the skits stuff
 
 char map::getCharacter(int Representation)
 {
-    switch(Representation)
-    {
-        case 0: return ' '; // empty space
-        case 1: return '.'; // ground floor
-        case 2: return '#'; // basic wall
-        case 10: return '@'; // Player symbol
-        case 20: return '&'; // Enemy symbol
-        case 100: return 'X'; // player start pos
-        default: return '?'; // has not been defined yet
-    }
+	switch(Representation)
+	{
+		case 0: return ' '; // empty space
+		case 1: return '.'; // ground floor
+		case 2: return '#'; // basic wall
+		case 10: return '@'; // Player symbol
+		case 20: return '&'; // Enemy symbol
+		case 100: return 'X'; // player start pos
+		default: return '?'; // has not been defined yet
+	}
 }
 
 int map::getWidth()
 {
-    return width;
+	return width;
 }
 int map::getHeight()
 {
-    return height;
+	return height;
 }
 int map::getEnemyNum()
 {
-    return enemyNum;
+	return enemyNum;
 }
 
 map::~map()

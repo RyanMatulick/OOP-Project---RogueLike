@@ -10,8 +10,8 @@ character::character(int iSymbol, int * Pos, int iHealth, int iAttackD,string iT
 {
 	Symbol = iSymbol; // The Characters Symbol
 	GroundSymbol = 1; // Will be placed underneath where the character is initialised
-    Health = iHealth;  // Health of Character
-    AttackD = iAttackD; // Attack Damage of Character
+	Health = iHealth;  // Health of Character
+	AttackD = iAttackD; // Attack Damage of Character
 
 	xNext = Pos[1]; // X position Character is moving too
 	xCurrent = Pos[1]; // Current X position of Character
@@ -31,7 +31,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	if(Type == "PLAYER")
 	{
 		Target = 20; // HARDCODED current enemy
-		Input = int(getKey());
+		Input = Getinput(Characters[0]);
 		switch(Input)
 		{
 			case 119: Moves = UP_INTERACTION; break;   // ascii 'w'
@@ -44,7 +44,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	else if(Type == "ENEMY")
 	{
 		Target = 10; // HARDCODED current player
-		Input = rand() % 4 + 1; // AI Turn
+		Input = Getinput(Characters[0]); // AI Turn
 		switch(Input)
 		{
 			case 1: Moves = UP_INTERACTION; break;
@@ -77,6 +77,11 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	}
 }
 
+
+int character::Getinput(character *Player)
+{
+	return 0;
+}
 
 // getters and setters -----------------------------------------------------------
 string character::getState()
@@ -125,7 +130,7 @@ void character::setState(string State)
 }
 void character::setSymbol(int iSymbol)
 {
-    Symbol = iSymbol;
+	Symbol = iSymbol;
 }
 void character::setGroundSymbol(char iSymbol)
 {
@@ -161,7 +166,7 @@ void character::Attack(character *Target) // Implement Basic Attack
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
-    // If the Character does not hit a wall, or Character of the same type
+	// If the Character does not hit a wall, or Character of the same type
 	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol)
 	{
 		TurnCount++; // we will either move or attack;
@@ -189,7 +194,7 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 	}
 	else
 	{
-	    if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
+		if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
 		getTurn(Map,Characters); //  get another input, as previous was un-playable
 		return false; // do not move the Character
 	}

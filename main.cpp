@@ -24,7 +24,7 @@ void GameLoop(map * Room)
 {
 	Room->generateMap();// Generate a random map
 
-	player * Player = new player(10,Room->getStartPos(),100,12); // Initialise the Player
+	player * Player = new player(10,Room->getStartPos(),50,12); // Initialise the Player
 
 	character * CArray[11];//maximum 10 enemies + player
 	CArray[0] = Player; // Place Player in First Spot
@@ -32,29 +32,29 @@ void GameLoop(map * Room)
 
 	for (int i=1; i<Room->getEnemyNum()+1;i++)
 	{
-		enemy * Enemy = new enemy(20,Room->getStartPos(),1,7); // Initialise the Enemies
+		enemy * Enemy = new enemy(20,Room->getStartPos(),30,7); // Initialise the Enemies
 		CArray[i] = Enemy; // Place Enemy in Array of Characters
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
 
-    Room->printTestRoom(); //print Start State
+	Room->printTestRoom(); //print Start State
 
 	while(Player->getState() != "Dead") // Main Loop
 	{
 		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game
 		{
-		    //If the Character has No Health and is not already dead
+			//If the Character has No Health and is not already dead
 			if(CArray[i]->getHealth() <= 0 && CArray[i]->getState() != "Dead")
-            {
-                CArray[i]->setState("Dead"); // set state to DEAD
-                CArray[i]->setSymbol(CArray[i]->getGroundSymbol()); // Update his symbol to be that of what he is standing on
-                Room->mapUpdate(CArray[i]); //Update the map
-            }
-            if(CArray[i]->getState() != "Dead") // If Character is Not Dead
-            {
-                CArray[i]->getTurn(Room,CArray); // Get Characters Turn
-                Room->mapUpdate(CArray[i]); // Update the Map State
-            }
+			{
+				CArray[i]->setState("Dead"); // set state to DEAD
+				CArray[i]->setSymbol(CArray[i]->getGroundSymbol()); // Update his symbol to be that of what he is standing on
+				Room->mapUpdate(CArray[i]); //Update the map
+			}
+			if(CArray[i]->getState() != "Dead") // If Character is Not Dead
+			{
+				CArray[i]->getTurn(Room,CArray); // Get Characters Turn
+				Room->mapUpdate(CArray[i]); // Update the Map State
+			}
 			clear_screen(); // Clear the Screen ready for Print
 		}
 		// For Somthing to be displayed it must be placed here -----------
@@ -64,7 +64,7 @@ void GameLoop(map * Room)
 		for (int i = 1; i<Room->getEnemyNum()+1; i++) // for size of character array
 		{
 			//Display Enemy Info DEBUGGING
-			cout << "Enemy #" << i << "Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
+			cout << "Enemy #" << i << " Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
 		}
 		//--------------------------------------------------------
 	}

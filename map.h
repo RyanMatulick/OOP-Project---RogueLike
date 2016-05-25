@@ -19,10 +19,10 @@ public:
 	void printTestRoom(); // Displays the current static test room
 	char getTestRoomcell(int x, int y);
 	void mapUpdate(character * Character); // update current map from enemy and player inputs. needs input of current player position?
-    char getCharacter(int Representation);
-    int getEnemyNum();
-    int getWidth();
-    int getHeight();
+	char getCharacter(int Representation);
+	int getEnemyNum();
+	int getWidth();
+	int getHeight();
 
 	void generateMap();
 	int* getStartPos();
