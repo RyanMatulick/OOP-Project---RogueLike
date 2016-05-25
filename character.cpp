@@ -48,6 +48,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		Target = 10; // HARDCODED current player
 		Input = rand() % 4 + 1;
 		//Input = 5;
+		//Input = 5;
 		switch(Input)
 		{
 			case 1: Moves = UP_INTERACTION; break;
@@ -161,22 +162,24 @@ void character::Attack(character *Target)
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
-	if (Map->getTestRoomcell(inputX, inputY) < 2) // if the player doesn't hit a wall
+	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol) // if the character doesn't hit a wall
 	{
 		TurnCount++; // we will either move or attack;
 		if(Map->getTestRoomcell(inputX, inputY) == Target) // if the next move is onto an enemy
 		{
-			for (int i = 0; i< 2; i++) // check all charcters in array to find the one that is in target square
+			for (int i = 0; i< Map->enemyNum+1; i++) // check all charcters in array to find the one that is in target square
 			{
-				if (Characters[i]->getX() == inputX)
+				if (Characters[i]->getNextY() == inputY)
 				{
-					if(Characters[i]->getY() == inputY)
+					if(Characters[i]->getNextX() == inputX)
 					{
 						Attack(Characters[i]);
 						return false; // do not move the player
 					}
 				}
 			}
+			cout << "Couldnt find target" << endl;
+			return false;
 		}
 		else
 		{
@@ -186,8 +189,9 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 	}
 	else
 	{
-		cout << "Can't Move there" << endl; // if they hit a wall display message
-		getTurn(Map,Characters); //  get another input, as previous was un-playable
+	    if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display message
+		getTurn(Map,Characters)
+		; //  get another input, as previous was un-playable
 		return false; // do not move the player
 	}
 

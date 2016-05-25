@@ -51,6 +51,7 @@ public:
 	int getNextY(); // get Characters y coordinate
 	int getHealth();
 
+
 	void setState(string State);
 	void setGroundSymbol(char GSymbol);
 	void setX(int ixLocation);

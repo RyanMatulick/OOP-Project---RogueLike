@@ -28,22 +28,22 @@ void TestUpdate(map * Room)
     int * PosArray;
     PosArray = Room->getStartPos();
 	player * Player = new player(10,PosArray[1],PosArray[0],50,12);
-	int enemyNum = rand() % 7 + 3;
+	Room->enemyNum = rand() % 7 + 3;
 	//int enemyNum = 3;
 	character * CArray[11];//maximum 10 enemies + player
 	CArray[0] = Player;
 
-	for (int i=0; i<enemyNum;i++)
+	for (int i=0; i<Room->enemyNum;i++)
 	{
 	    PosArray = Room->getStartPos();
 	    cout << PosArray[0] << " " << PosArray[1] << endl;
-		enemy * Enemy = new enemy(20,PosArray[1],PosArray[0],50,12);
+		enemy * Enemy = new enemy(20,PosArray[1],PosArray[0],30,7);
 		CArray[i+1] = Enemy;
 	}
 
     cout << "Made all characters" << endl;
 
-	for (int i = 0; i<enemyNum+1; i++)
+	for (int i = 0; i<Room->enemyNum+1; i++)
     {
         Room->mapUpdate(CArray[i]);
     }
@@ -52,7 +52,7 @@ void TestUpdate(map * Room)
 
 	while(Player->getState() != "Dead")
 	{
-		for (int i = 0; i<enemyNum+1; i++) // for size of character array
+		for (int i = 0; i<Room->enemyNum+1; i++) // for size of character array
 		{
 			//cout << CArray[i]->Health << endl;
 			CArray[i]->getTurn(Room,CArray);
@@ -64,6 +64,12 @@ void TestUpdate(map * Room)
 		Room->printTestRoom();
 		cout << "Turn Count: " << CArray[0]->TurnCount << endl;
 		cout << "Player Health: " << Player->getHealth() << endl;
+		for (int i = 1; i<Room->enemyNum+1; i++) // for size of character array
+		{
+			//Display Enemy Health
+			cout << "Enemy #" << i << "Health: " << CArray[i]->getHealth() << endl;
+		}
+		cout << CArray[0]->getX() << " " << CArray[0]->getY() << endl;
 		//cout << "Enemy Health: " << Enemy->getHealth() << endl;
 		//--------------------------------------------------------
 	}

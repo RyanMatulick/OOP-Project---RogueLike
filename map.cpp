@@ -258,12 +258,10 @@ void map::mapUpdate(character * Character)
 {
 	//Repeat for every Character on the map. currently static 1;
 	// will have to iterate through an array of characters
-	for (int i = 0; i< 1; i++)
-	{
-		TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
-		Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
-		TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
-	}
+
+    TestRoom[Character->getY()][Character->getX()] = Character->getGroundSymbol();
+	Character->setGroundSymbol(TestRoom[Character->getNextY()][Character->getNextX()]);
+	TestRoom[Character->getNextY()][Character->getNextX()] = Character->getSymbol();
 }
 
 char map::getTestRoomcell(int x, int y) // some form of this is needed to check for collisions and enemies in adjacent squares

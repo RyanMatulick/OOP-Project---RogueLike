@@ -25,6 +25,7 @@ public:
 
 	void generateMap();
 	int* getStartPos();
+	int enemyNum;
 
 private:
 
