@@ -10,7 +10,7 @@ class map
 {
 public:
 
-	map(int inWidth, int inHeight);
+	map(int inWidth, int inHeight, int NumofEnemies);
 	void drawMap(); // occurs after player input
 	~map();
 
@@ -20,6 +20,7 @@ public:
 	char getTestRoomcell(int x, int y);
 	void mapUpdate(character * Character); // update current map from enemy and player inputs. needs input of current player position?
     char getCharacter(int Representation);
+    int getEnemyNum();
     int getWidth();
     int getHeight();
 

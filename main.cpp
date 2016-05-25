@@ -7,86 +7,68 @@
 
 #include <ctime>
 #include <stdlib.h>
-void TestUpdate(map * Room);
+void GameLoop(map * Room);
 
 int main()
 {
-	srand(time(NULL));
-	clear_screen();
-	system("mode 350"); // Windows Only
+	srand(time(NULL)); // set the random seed
+	clear_screen(); // Clear the current terminal
+	system("mode 350"); // Windows Only for full screen
 
-	map * TestRoom;
-	TestRoom = new map(80, 30);
-	TestUpdate(TestRoom);
+	map * Room; // declare First Room
+	Room = new map(80, 30, rand() % 7 + 3); // Y Size,X Size, Number of Enemies
+	GameLoop(Room); // Main Game Loop
 }
 
-void TestUpdate(map * Room)
+void GameLoop(map * Room)
 {
+	Room->generateMap();// Generate a random map
 
-	Room->generateMap();
+	player * Player = new player(10,Room->getStartPos(),100,12); // Initialise the Player
 
-    int * PosArray;
-    PosArray = Room->getStartPos();
-	player * Player = new player(10,PosArray[1],PosArray[0],1,12);
-	Room->enemyNum = rand() % 7 + 3;
-	//int enemyNum = 3;
 	character * CArray[11];//maximum 10 enemies + player
-	CArray[0] = Player;
+	CArray[0] = Player; // Place Player in First Spot
+	Room->mapUpdate(CArray[0]); // Place Player on Map
 
-	for (int i=0; i<Room->enemyNum;i++)
+	for (int i=1; i<Room->getEnemyNum()+1;i++)
 	{
-	    PosArray = Room->getStartPos();
-	    cout << PosArray[0] << " " << PosArray[1] << endl;
-		enemy * Enemy = new enemy(20,PosArray[1],PosArray[0],30,7);
-		CArray[i+1] = Enemy;
+		enemy * Enemy = new enemy(20,Room->getStartPos(),1,7); // Initialise the Enemies
+		CArray[i] = Enemy; // Place Enemy in Array of Characters
+		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
 
-    cout << "Made all characters" << endl;
+    Room->printTestRoom(); //print Start State
 
-	for (int i = 0; i<Room->enemyNum+1; i++)
-    {
-        Room->mapUpdate(CArray[i]);
-    }
-    cout << "updated the room" << endl;
-    Room->printTestRoom(); //print first frame
-
-	while(Player->getState() != "Dead")
+	while(Player->getState() != "Dead") // Main Loop
 	{
-		for (int i = 0; i<Room->enemyNum+1; i++) // for size of character array
+		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game
 		{
-			//cout << CArray[i]->Health << endl;
+		    //If the Character has No Health and is not already dead
 			if(CArray[i]->getHealth() <= 0 && CArray[i]->getState() != "Dead")
             {
-                //CArray[i] = NULL;
-                CArray[i]->setState("Dead");
-                CArray[i]->Type = "Dead";
-                CArray[i]->setSymbol(CArray[i]->getGroundSymbol());
-                Room->mapUpdate(CArray[i]);
+                CArray[i]->setState("Dead"); // set state to DEAD
+                CArray[i]->setSymbol(CArray[i]->getGroundSymbol()); // Update his symbol to be that of what he is standing on
+                Room->mapUpdate(CArray[i]); //Update the map
             }
-            if(CArray[i]->getState() != "Dead")
+            if(CArray[i]->getState() != "Dead") // If Character is Not Dead
             {
-                CArray[i]->getTurn(Room,CArray);
-                Room->mapUpdate(CArray[i]);
+                CArray[i]->getTurn(Room,CArray); // Get Characters Turn
+                Room->mapUpdate(CArray[i]); // Update the Map State
             }
-
-
-			clear_screen();
-
-
+			clear_screen(); // Clear the Screen ready for Print
 		}
 		// For Somthing to be displayed it must be placed here -----------
-		Room->printTestRoom();
-		cout << "Turn Count: " << CArray[0]->TurnCount << endl;
-		cout << "Player Health: " << Player->getHealth() << endl;
-		for (int i = 1; i<Room->enemyNum+1; i++) // for size of character array
+		Room->printTestRoom(); // Prints out the Maps Updated State
+		//Print Player Info
+		cout << "Player Health: " << Player->getHealth() << " Turn Count: " << CArray[0]->TurnCount << endl;
+		for (int i = 1; i<Room->getEnemyNum()+1; i++) // for size of character array
 		{
-			//Display Enemy Health
+			//Display Enemy Info DEBUGGING
 			cout << "Enemy #" << i << "Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
 		}
-		cout << CArray[0]->getX() << " " << CArray[0]->getY() << endl;
-		//cout << "Enemy Health: " << Enemy->getHealth() << endl;
 		//--------------------------------------------------------
 	}
+	//If program is here the player has died
 	clear_screen();
 	cout << "You Lose" << endl;
 

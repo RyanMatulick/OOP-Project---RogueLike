@@ -1,6 +1,7 @@
 #include "enemy.h"
 
-enemy::enemy(int iSymbol, int ixLocation, int iyLocation,int iHealth, int iAttackD):character(iSymbol, ixLocation, iyLocation, iHealth, iAttackD,"ENEMY")
+//Creates an Enemy Object
+enemy::enemy(int iSymbol, int * Pos,int iHealth, int iAttackD):character(iSymbol, Pos, iHealth, iAttackD,"ENEMY")
 {
 }
 

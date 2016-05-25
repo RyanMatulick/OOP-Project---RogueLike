@@ -8,7 +8,7 @@ class enemy :public character
 private:
 
 public:
-	enemy(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD);
+	enemy(int Symbol, int * Pos,int Health, int AttackD);
 	~enemy();
 
 };

@@ -8,7 +8,7 @@ class player :public character
 private:
 
 public:
-    player(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD);
+    player(int Symbol, int * Pos,int Health, int AttackD);
     ~player();
 
 };

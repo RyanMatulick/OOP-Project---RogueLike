@@ -9,22 +9,22 @@ class character
 {
 protected:
 
-	int Symbol;
+	int Symbol; // Symbol of Character
 	int GroundSymbol; // saves the symbol of the space the player is about to move onto;
 
-	int xCurrent;
-	int yCurrent;
-	int xNext;
-	int yNext;
+	int xCurrent; // Current X position
+	int yCurrent; // Current Y position
+	int xNext; // X position to move too
+	int yNext; // Y position to move too
 
-	int Health;
-	int AttackD;
+	int Health; // Characters Health
+	int AttackD; // Characters Attack Damage
 
-	string CharacterState;
+	string CharacterState; // Characters state
+    string Type; // Type of Character
 
-
-	void Attack(character *Target);
-	bool Move(map *Map,character **Character,int inputX, int inputY,int Target);
+	void Attack(character *Target); // Basic Attack Function
+	bool Move(map *Map,character **Character,int inputX, int inputY,int Target); // Move or Attack
 
 	enum MOVES
 	{
@@ -37,19 +37,19 @@ protected:
 
 
 public:
-	string Type;
-	character(int Symbol, int xCurrent, int yCurrent,int Health, int AttackD,string Type);
+
+	character(int Symbol, int * Pos,int Health, int AttackD,string Type);
 
 	void getTurn(map* Map, character **Character); // change to room
 
-	string getState();
-	char getSymbol();
-	char getGroundSymbol();
+	string getState(); // get Characters State
+	char getSymbol(); // get Characters Symbol
+	char getGroundSymbol(); // get symbol underneath the player
 	int getX(); // get Characters x coordinate
 	int getY(); // get Characters y coordinate
 	int getNextX(); // get Characters x coordinate
 	int getNextY(); // get Characters y coordinate
-	int getHealth();
+	int getHealth(); // get Characters Health
 
 
 	void setState(string State);

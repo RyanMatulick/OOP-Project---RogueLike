@@ -10,10 +10,11 @@
 using namespace std;
 
 
-map::map(int inWidth, int inHeight)
+map::map(int inWidth, int inHeight, int enemyCount)
 {
 	width=inWidth;
 	height = inHeight;
+	enemyNum = enemyCount;
 }
 
 void map::generateMap()
@@ -302,6 +303,10 @@ int map::getWidth()
 int map::getHeight()
 {
     return height;
+}
+int map::getEnemyNum()
+{
+    return enemyNum;
 }
 
 map::~map()

@@ -1,6 +1,6 @@
 #include "player.h"
 
-player::player(int iSymbol, int ixLocation, int iyLocation,int iHealth, int iAttackD):character(iSymbol, ixLocation, iyLocation, iHealth, iAttackD, "PLAYER")
+player::player(int iSymbol, int * Pos,int iHealth, int iAttackD):character(iSymbol, Pos, iHealth, iAttackD, "PLAYER")
 {
 }
 

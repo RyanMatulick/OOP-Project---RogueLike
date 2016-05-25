@@ -6,29 +6,28 @@
 #include <string>
 
 using namespace std;
-character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, int iAttackD,string iType)
+character::character(int iSymbol, int * Pos, int iHealth, int iAttackD,string iType)
 {
-	Symbol = iSymbol;
+	Symbol = iSymbol; // The Characters Symbol
 	GroundSymbol = 1; // Will be placed underneath where the character is initialised
-    Health = iHealth;
-    AttackD = iAttackD;
+    Health = iHealth;  // Health of Character
+    AttackD = iAttackD; // Attack Damage of Character
 
-	xNext = ixLocation;
-	xCurrent = ixLocation;
-	yNext = iyLocation;
-	yCurrent = iyLocation;
-	TurnCount = 0;
-	CharacterState = "Alive";
-	Type = iType;
-
+	xNext = Pos[1]; // X position Character is moving too
+	xCurrent = Pos[1]; // Current X position of Character
+	yNext = Pos[0]; // Y positoin Character is moving too
+	yCurrent = Pos[0]; // Current Y position of Character
+	TurnCount = 0; // How many turns the character has had
+	CharacterState = "Alive"; // Current state of the Character
+	Type = iType; // Type of Character e.g Player/Enemy
 }
 
 
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
 {
 	MOVES Moves = NO_MOVE;
-	int Input;
-	int Target;
+	int Input; // Player Input or Enemy Generated Input
+	int Target; // Enemy of current Character
 	if(Type == "PLAYER")
 	{
 		Target = 20; // HARDCODED current enemy
@@ -45,9 +44,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	else if(Type == "ENEMY")
 	{
 		Target = 10; // HARDCODED current player
-		Input = rand() % 4 + 1;
-		//Input = 5;
-		//Input = 5;
+		Input = rand() % 4 + 1; // AI Turn
 		switch(Input)
 		{
 			case 1: Moves = UP_INTERACTION; break;
@@ -57,7 +54,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 			default: break;
 		}
 	}
-	yCurrent = yNext;
+	yCurrent = yNext; // Reset From Last Turn
 	xCurrent = xNext;
 	switch (Moves)
 	{
@@ -75,7 +72,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		break;
 	case NO_MOVE:  // If Invalid key is pressed, get another.
 		cout <<"Invalid Key" << endl;
-		//getTurn(Map,Characters);
+		getTurn(Map,Characters);
 		break;
 	}
 }
@@ -156,7 +153,7 @@ void character::setNextY(int iyLocation)
 
 //-------------------------------------------------------------------------------------------------
 
-void character::Attack(character *Target)
+void character::Attack(character *Target) // Implement Basic Attack
 {
 	Target->Health -= AttackD;
 }
@@ -164,23 +161,24 @@ void character::Attack(character *Target)
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
-	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol) // if the character doesn't hit a wall
+    // If the Character does not hit a wall, or Character of the same type
+	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol)
 	{
 		TurnCount++; // we will either move or attack;
 		if(Map->getTestRoomcell(inputX, inputY) == Target) // if the next move is onto an enemy
 		{
-			for (int i = 0; i< Map->enemyNum+1; i++) // check all charcters in array to find the one that is in target square
+			for (int i = 0; i< Map->enemyNum+1; i++) // check all charcters in array to find the one that is in the target square
 			{
 				if (Characters[i]->getNextY() == inputY)
 				{
 					if(Characters[i]->getNextX() == inputX)
 					{
-						Attack(Characters[i]);
-						return false; // do not move the player
+						Attack(Characters[i]); // Attack the Target
+						return false; // do not move the Character
 					}
 				}
 			}
-			cout << "Couldnt find target" << endl;
+			cout << "Couldnt find target" << endl; // Should never occur, but for Debugging
 			return false;
 		}
 		else
@@ -191,10 +189,9 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 	}
 	else
 	{
-	    if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display message
-		getTurn(Map,Characters)
-		; //  get another input, as previous was un-playable
-		return false; // do not move the player
+	    if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
+		getTurn(Map,Characters); //  get another input, as previous was un-playable
+		return false; // do not move the Character
 	}
 
 }
