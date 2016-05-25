@@ -1,9 +1,14 @@
 #include "character.h"
 #include "map.h"
+#include "item.h"
 #include "OS_Functions.h"
+#include "potion.h"
+#include "sword.h"
 #include "stdlib.h" // for rand
 #include <iostream>
 #include <string>
+
+#include <windows.h>
 
 using namespace std;
 character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, int iAttackD,string iType)
@@ -22,9 +27,44 @@ character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, i
 	CharacterState = "Alive";
 	Type = iType;
 
+	//initialize an inventory full of potions and weapons
+    for (int i=0; i<5; i++)
+    {
+        Inventory[i] = new potion("A tasty health potion", "potion", "health");
+    }
+    for (int i=5; i<7; i++)
+    {
+        Inventory[i] = new potion("A poison potion", "potion", "poison");
+    }
+    Inventory[7] = new sword("sharp dagger", "sword", "dagger");
+    Inventory[8] = new sword("sharp dagger", "sword", "dagger");
+    Inventory[9] = new sword("shiny longsword", "sword", "longsword");
+
 }
 
+void character::setHealth(int newHealth)
+{
+    Health = Health + newHealth; //add on how much new health we want
+    if(Health>50) //max 50
+    {
+        Health=50;
+    }
+}
 
+void character::useItem()
+{
+    cout << "enter which item you want to use" << endl;
+    int itemToUse = getKey();
+    cout << itemToUse << endl;
+
+    itemToUse = itemToUse - 48;
+    if(itemToUse<10 && itemToUse>-1)
+    {
+        Inventory[itemToUse]->use(this);
+    }
+    else {cout << "Not an item number!";}
+
+}
 
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
 {
@@ -41,6 +81,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 			case 115: Moves = DOWN_INTERACTION; break; // ascii 's'
 			case 97:  Moves = LEFT_INTERACTION; break; // ascii 'a'
 			case 100: Moves = RIGHT_INTERACTION; break;// ascii 'd'
+			case 105: Moves = USE_ITEM; break;         // ascii 'i'
 			default: break;
 		}
 	}
@@ -51,8 +92,8 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		//Input = 5;
 		switch(Input)
 		{
-			case 1: Moves = UP_INTERACTION; break;   
-			case 2: Moves = DOWN_INTERACTION; break; 
+			case 1: Moves = UP_INTERACTION; break;
+			case 2: Moves = DOWN_INTERACTION; break;
 			case 3:  Moves = LEFT_INTERACTION; break;
 			case 4: Moves = RIGHT_INTERACTION; break;
 			default: break;
@@ -74,7 +115,10 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	case RIGHT_INTERACTION: // Move or Attack Right
 		if(Move(Map,Characters,xNext + 1,yCurrent, Target)==true){xNext++;}
 		break;
+    case USE_ITEM:
+        useItem();
 	case NO_MOVE:  // If Invalid key is pressed, get another.
+	    Sleep(5000);
 		cout <<"Invalid Key" << endl;
 		//getTurn(Map,Characters);
 		break;
@@ -122,6 +166,11 @@ int character::getHealth()
 	return Health;
 }
 
+int character::getAttackD()
+{
+    return AttackD;
+}
+
 
 void character::setState(string State)
 {
@@ -150,6 +199,11 @@ void character::setNextX(int ixLocation)
 void character::setNextY(int iyLocation)
 {
 	yNext = iyLocation;
+}
+
+void character::setAttackD(int extraAttack)
+{
+    AttackD = AttackD + extraAttack;
 }
 
 //-------------------------------------------------------------------------------------------------

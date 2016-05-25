@@ -8,6 +8,15 @@
 #include <cstdlib>
 #endif // WIN32
 
+#include "map.cpp"
+#include "character.cpp"
+#include "player.cpp"
+#include "enemy.cpp"
+#include "item.cpp"
+#include "potion.cpp"
+#include "OS_Functions.cpp"
+#include "sword.cpp"
+
 
 void TestUpdate(map * Room);
 
@@ -21,7 +30,7 @@ int main()
 }
 
 void TestUpdate(map * Room)
-{ 
+{
 	player * Player = new player(10, 9, 7,50,12); // Display Symbol, x position, y position, Health, damage;
 	enemy * Enemy = new enemy(20, 30,16,20,7);
 	character * CArray[2];
@@ -49,6 +58,8 @@ void TestUpdate(map * Room)
 		cout << "Turn Count: " << CArray[0]->TurnCount << endl;
 		cout << "Player Health: " << Player->getHealth() << endl;
 		cout << "Enemy Health: " << Enemy->getHealth() << endl;
+		cout << "Player attack damage: " << Player->getAttackD() << endl;
+		Player->displayInventory();
 		//--------------------------------------------------------
 	}
 }

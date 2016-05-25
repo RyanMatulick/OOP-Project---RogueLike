@@ -1,6 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 class map;
+class item;
+#include "item.h"
+#include "potion.h"
 #include <string>
 
 using namespace std;
@@ -20,6 +23,8 @@ protected:
 	int Health;
 	int AttackD;
 
+	item * Inventory[10];
+
 	string CharacterState;
 
 
@@ -33,6 +38,7 @@ protected:
 		LEFT_INTERACTION,
 		RIGHT_INTERACTION,
 		NO_MOVE,
+		USE_ITEM,
 	};
 
 
@@ -50,6 +56,7 @@ public:
 	int getNextX(); // get Characters x coordinate
 	int getNextY(); // get Characters y coordinate
 	int getHealth();
+	int getAttackD();
 
 	void setState(string State);
 	void setGroundSymbol(char GSymbol);
@@ -57,7 +64,11 @@ public:
 	void setY(int ixLocation);
 	void setNextX(int ixLocation);
 	void setNextY(int ixLocation);
+	void setAttackD(int extraAttack);
 
+	void setHealth(int newHealth);
+
+	void useItem();
 
 	int TurnCount;
 	~character();
