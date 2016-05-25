@@ -53,6 +53,7 @@ public:
 
 
 	void setState(string State);
+	void setSymbol(int Symbol);
 	void setGroundSymbol(char GSymbol);
 	void setX(int ixLocation);
 	void setY(int ixLocation);

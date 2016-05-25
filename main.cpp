@@ -27,7 +27,7 @@ void TestUpdate(map * Room)
 
     int * PosArray;
     PosArray = Room->getStartPos();
-	player * Player = new player(10,PosArray[1],PosArray[0],50,12);
+	player * Player = new player(10,PosArray[1],PosArray[0],1,12);
 	Room->enemyNum = rand() % 7 + 3;
 	//int enemyNum = 3;
 	character * CArray[11];//maximum 10 enemies + player
@@ -55,9 +55,23 @@ void TestUpdate(map * Room)
 		for (int i = 0; i<Room->enemyNum+1; i++) // for size of character array
 		{
 			//cout << CArray[i]->Health << endl;
-			CArray[i]->getTurn(Room,CArray);
+			if(CArray[i]->getHealth() <= 0 && CArray[i]->getState() != "Dead")
+            {
+                //CArray[i] = NULL;
+                CArray[i]->setState("Dead");
+                CArray[i]->Type = "Dead";
+                CArray[i]->setSymbol(CArray[i]->getGroundSymbol());
+                Room->mapUpdate(CArray[i]);
+            }
+            if(CArray[i]->getState() != "Dead")
+            {
+                CArray[i]->getTurn(Room,CArray);
+                Room->mapUpdate(CArray[i]);
+            }
+
+
 			clear_screen();
-			Room->mapUpdate(CArray[i]);
+
 
 		}
 		// For Somthing to be displayed it must be placed here -----------
@@ -67,10 +81,13 @@ void TestUpdate(map * Room)
 		for (int i = 1; i<Room->enemyNum+1; i++) // for size of character array
 		{
 			//Display Enemy Health
-			cout << "Enemy #" << i << "Health: " << CArray[i]->getHealth() << endl;
+			cout << "Enemy #" << i << "Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
 		}
 		cout << CArray[0]->getX() << " " << CArray[0]->getY() << endl;
 		//cout << "Enemy Health: " << Enemy->getHealth() << endl;
 		//--------------------------------------------------------
 	}
+	clear_screen();
+	cout << "You Lose" << endl;
+
 }

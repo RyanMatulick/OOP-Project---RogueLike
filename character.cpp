@@ -13,7 +13,6 @@ character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, i
     Health = iHealth;
     AttackD = iAttackD;
 
-
 	xNext = ixLocation;
 	xCurrent = ixLocation;
 	yNext = iyLocation;
@@ -127,7 +126,10 @@ void character::setState(string State)
 {
 	CharacterState = State;
 }
-
+void character::setSymbol(int iSymbol)
+{
+    Symbol = iSymbol;
+}
 void character::setGroundSymbol(char iSymbol)
 {
 	GroundSymbol = iSymbol;
