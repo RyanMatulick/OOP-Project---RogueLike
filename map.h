@@ -25,7 +25,10 @@ public:
 
 	void generateMap();
 	int* getStartPos();
+<<<<<<< HEAD
 	void printWall(int j,int i);
+=======
+>>>>>>> origin/master
 	int enemyNum;
 
 private:

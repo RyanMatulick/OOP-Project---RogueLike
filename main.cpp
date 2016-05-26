@@ -11,6 +11,7 @@ void GameLoop(map * Room);
 
 int main()
 {
+<<<<<<< HEAD
 	int seed;
 	cout << "seed: ";
 	cin >> seed; // gets seed
@@ -18,6 +19,11 @@ int main()
 	else {srand(time(NULL));} // set the random seed
 	clear_screen(); // Clear the current terminal
 	//system("mode 350"); // Windows Only for full screen
+=======
+	srand(time(NULL)); // set the random seed
+	clear_screen(); // Clear the current terminal
+	system("mode 350"); // Windows Only for full screen
+>>>>>>> origin/master
 
 	map * Room; // declare First Room
 	Room = new map(80, 30, rand() % 7 + 3); // Y Size,X Size, Number of Enemies
@@ -36,7 +42,11 @@ void GameLoop(map * Room)
 
 	for (int i=1; i<Room->getEnemyNum()+1;i++)
 	{
+<<<<<<< HEAD
 		enemy * Enemy = new enemy(20,Room->getStartPos(),30,7); // Initialise the Enemies
+=======
+		enemy * Enemy = new enemy(20,Room->getStartPos(),20,6); // Initialise the Enemies
+>>>>>>> origin/master
 		CArray[i] = Enemy; // Place Enemy in Array of Characters
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}

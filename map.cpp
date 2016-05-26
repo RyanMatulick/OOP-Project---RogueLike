@@ -55,11 +55,19 @@ void map::generateMap()
 
 			roomsize_x = rand() % (8+1-2) + 2;
 			roomsize_y = rand() % (6+1-2) + 2;
+<<<<<<< HEAD
 			while (roomsize_x > pos_x -2 or roomsize_x > 80 - pos_x -3)
 			{
 				roomsize_x -= 1;
 			}
 			while (roomsize_y > pos_y -2 or roomsize_y > 30 - pos_y -3)
+=======
+			while (roomsize_x > pos_x -1 || roomsize_x > 80 - pos_x -2)
+			{
+				roomsize_x -= 1;
+			}
+			while (roomsize_y > pos_y -1 || roomsize_y > 30 - pos_y -2)
+>>>>>>> origin/master
 			{
 				roomsize_y -= 1;
 			}
@@ -179,7 +187,7 @@ void map::generateMap()
 				test2 += tmap[j][i];
 			}
 		}
-		if (test1<150 or test2<150)
+		if (test1<150 || test2<150)
 		{
 			goodmap = false;
 			rooms = 0;
