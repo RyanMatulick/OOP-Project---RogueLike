@@ -2,7 +2,6 @@
 
 #ifndef MAP_H
 #define MAP_H
-//#include "character.h"
 using namespace std;
 class character;
 
@@ -10,7 +9,7 @@ class map
 {
 public:
 
-	map(int inWidth, int inHeight);
+	map(int inWidth, int inHeight, int NumofEnemies);
 	void drawMap(); // occurs after player input
 	~map();
 
@@ -19,12 +18,15 @@ public:
 	void printTestRoom(); // Displays the current static test room
 	char getTestRoomcell(int x, int y);
 	void mapUpdate(character * Character); // update current map from enemy and player inputs. needs input of current player position?
-    char getCharacter(int Representation);
-    int getWidth();
-    int getHeight();
+	char getCharacter(int Representation);
+	int getEnemyNum();
+	int getWidth();
+	int getHeight();
 
 	void generateMap();
 	int* getStartPos();
+	void printWall(int j,int i);
+	int enemyNum;
 
 private:
 
