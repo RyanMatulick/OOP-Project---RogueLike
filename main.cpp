@@ -20,7 +20,7 @@ int main()
 	//system("mode 350"); // Windows Only for full screen
 
 	map * Room; // declare First Room
-	Room = new map(80, 30, rand() % 7 + 3); // Y Size,X Size, Number of Enemies
+	Room = new map(80, 30, rand() % 1 + 3); // Y Size,X Size, Number of Enemies
 	GameLoop(Room); // Main Game Loop
 }
 
@@ -42,7 +42,7 @@ void GameLoop(map * Room)
 	}
 
 	Room->printTestRoom(); //print Start State
-
+    int EnemysRemaining = Room->getEnemyNum();
 	while(Player->getState() != "Dead") // Main Loop
 	{
 		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game
@@ -53,11 +53,13 @@ void GameLoop(map * Room)
 				CArray[i]->setState("Dead"); // set state to DEAD
 				CArray[i]->setSymbol(CArray[i]->getGroundSymbol()); // Update his symbol to be that of what he is standing on
 				Room->mapUpdate(CArray[i]); //Update the map
+				EnemysRemaining--;
 			}
 			if(CArray[i]->getState() != "Dead") // If Character is Not Dead
 			{
 				CArray[i]->getTurn(Room,CArray); // Get Characters Turn
 				Room->mapUpdate(CArray[i]); // Update the Map State
+
 			}
 			clear_screen(); // Clear the Screen ready for Print
 		}
@@ -72,6 +74,10 @@ void GameLoop(map * Room)
 			//Display Enemy Info DEBUGGING
 			cout << "Enemy #" << i << " Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
 		}
+		if (EnemysRemaining == 0)
+        {
+            cout << "YOU WIN" << endl;
+        }
 		//--------------------------------------------------------
 	}
 	//If program is here the player has died
