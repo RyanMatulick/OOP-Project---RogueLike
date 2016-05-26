@@ -32,7 +32,7 @@ void GameLoop(map * Room)
 
 	for (int i=1; i<Room->getEnemyNum()+1;i++)
 	{
-		enemy * Enemy = new enemy(20,Room->getStartPos(),30,7); // Initialise the Enemies
+		enemy * Enemy = new enemy(20,Room->getStartPos(),20,6); // Initialise the Enemies
 		CArray[i] = Enemy; // Place Enemy in Array of Characters
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
