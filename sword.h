@@ -19,5 +19,7 @@ public:
 private:
     bool isThisWielded; //is this particular sword in had?
 
+    ~sword();
+
 };
 #endif // SWORD_H
