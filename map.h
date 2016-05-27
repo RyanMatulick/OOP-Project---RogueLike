@@ -2,6 +2,8 @@
 
 #ifndef MAP_H
 #define MAP_H
+#include <iostream>
+#include <string>
 using namespace std;
 class character;
 
@@ -28,6 +30,9 @@ public:
 	void printWall(int j,int i);
 	int enemyNum;
 	void setMapTile(int yPos, int xPos, int newTileType);
+	void addMessage(string Message);
+
+	string * Messages = new string [3];
 
 private:
 

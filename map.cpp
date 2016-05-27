@@ -2,10 +2,9 @@
 #include <iostream>
 #include "map.h"
 #include "character.h"
-
 #include <stdlib.h>
 
-
+#include <string>
 
 using namespace std;
 
@@ -361,6 +360,15 @@ int map::getHeight()
 int map::getEnemyNum()
 {
 	return enemyNum;
+}
+
+void map::addMessage(string Message)
+{
+    string SaveMessage1 = Messages[1];
+    string SaveMessage2 = Messages[2];
+    Messages[0] = SaveMessage1;
+    Messages[1] = SaveMessage2;
+    Messages[2] = Message;
 }
 
 map::~map()

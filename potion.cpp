@@ -2,6 +2,7 @@
 #include <iostream>
 #include "potion.h"
 #include "item.h"
+#include "map.h"
 #include "character.h"
 //#include "character.h"
 
@@ -20,31 +21,20 @@ potion::potion(string flavourTextIn, string nameIn, string typeIn)
     full=true;
 }
 
-void potion::use(character * target)
+void potion::use(character * target, map * Map)
 {
-    cout << "potion::use called" << endl;
-    if(!full)
+    if(!type.compare("health")) //if the type is health potion (compare returns 0 if equal)
     {
-        cout<<"You already drank that!" << endl;
+        full=false;
+        target->setHealth(50);  //set target health to be the maximum
+        Map->addMessage("you feel refreshed");
     }
-
-    else
+    else if (!type.compare("poison"))
     {
-
-        if(!type.compare("health")) //if the type is health potion (compare returns 0 if equal)
-        {
-            full=false;
-            target->setHealth(50);  //set target health to be the maximum
-            cout << "you feel refreshed" << endl;
-        }
-        else if (!type.compare("poison"))
-        {
-            full=false;
-            target->setHealth(-10);
-            cout << "you dont feel so good..." << endl;
-        }
+        full=false;
+        target->setHealth(-10);
+        Map->addMessage("you dont feel so good...");
     }
-
 }
 
 void potion::place(character * target)

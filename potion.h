@@ -2,6 +2,7 @@
 #define POTION_H
 #include <string>
 #include "item.h"
+#include "map.h"
 
 //class item;
 class character;
@@ -13,7 +14,7 @@ public:
     potion();
     potion(string flavourTextIn, string nameIn, string typeIn);
 
-    void use(character * target);
+    void use(character * target,map * Map);
     void place(character * target);
 
     ~potion();

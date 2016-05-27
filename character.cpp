@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <sstream>
 
 using namespace std;
 character::character(int iSymbol, int * Pos, int iHealth, int iAttackD,string iType)
@@ -49,23 +50,27 @@ void character::setHealth(int newHealth)
     }
 }
 
-void character::useItem()
+void character::useItem(map * Map)
 {
-    cout << "enter which item you want to use" << endl;
+    cout << "Enter which item you want to use" <<endl;
     int itemToUse = getKey();
-    cout << itemToUse << endl;
 
     itemToUse = itemToUse - 48;
     if(itemToUse<10 && itemToUse>-1)
     {
-        Inventory[itemToUse]->use(this);
+        Inventory[itemToUse]->use(this,Map);
     }
-    else {cout << "Not an item number!";}
+    else
+    {
+        Map->addMessage("Not an item number!");
+        useItem(Map);
+    }
 }
 
-void character::placeItem()
+void character::placeItem(map * Map)
 {
-    cout << "enter which item you want to place" << endl;
+    Map->addMessage("Enter which item you want to place");
+    Map->printTestRoom();
     int itemToPlace = getKey();
     cout << itemToPlace << endl;
 
@@ -75,7 +80,11 @@ void character::placeItem()
         Inventory[itemToPlace]->place(this);
         Inventory[itemToPlace] = new item("","","");
     }
-    else {cout << "Not an item number!";}
+    else
+    {
+        Map->addMessage("Not an item number!");
+        placeItem(Map);
+    }
 }
 
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
@@ -128,13 +137,13 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		if(Move(Map,Characters,xNext + 1,yCurrent, Target)==true){xNext++;}
 		break;
     case USE_ITEM:
-        useItem();
+        useItem(Map);
         break;
     case PLACE_ITEM:
-        placeItem();
+        placeItem(Map);
         break;
 	case NO_MOVE:  // If Invalid key is pressed, get another.
-		cout <<"Invalid Key" << endl;
+		Map->addMessage("Invalid Key");
 		getTurn(Map,Characters);
 		break;
 	}
@@ -231,13 +240,28 @@ void character::setAttackD(int extraAttack)
 
 //-------------------------------------------------------------------------------------------------
 
-void character::Attack(character *Target) // Implement Basic Attack
+void character::Attack(character *Target,map * Map) // Implement Basic Attack
 {
+    ostringstream convert;   // stream used for the conversion
+    convert << AttackD;      // insert the textual representation of 'Number' in the characters in the stream
+    string Result = convert.str(); // set 'Result' to the contents of the stream
+    if (Target->getSymbol() == 10)
+    {
+        Map->addMessage("Enemy Dealt "+Result+" Damage to the Player" );
+    }
+    else
+    {
+        Map->addMessage("Player Dealt "+Result+" Damage to an Enemy" );
+        if ((Target->Health -= AttackD) <= 0 )
+        {
+             Map->addMessage("Player Killed Enemy");
+        }
+    }
 	Target->Health -= AttackD;
 }
 
 //put an item into the inventory in place iSopt of typek iItemNo
-bool character::pickupItem(int iSpot, int iItemNo)
+bool character::pickupItem(int iSpot, int iItemNo, map * Map)
 {
     if(Inventory[iSpot]->getName()=="")//if selected slot is empty
     {
@@ -266,7 +290,7 @@ bool character::pickupItem(int iSpot, int iItemNo)
     }
     else
     {
-        cout<<"this spot already contains a: " << Inventory[iSpot]->getName() <<": " <<Inventory[iSpot]->getType()<<endl;
+        Map->addMessage("this spot already contains a: " + Inventory[iSpot]->getName() +": " +Inventory[iSpot]->getType());
         return false;
     }
 }
@@ -285,12 +309,12 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 				{
 					if(Characters[i]->getNextX() == inputX)
 					{
-						Attack(Characters[i]); // Attack the Target
+						Attack(Characters[i],Map); // Attack the Target
 						return false; // do not move the Character
 					}
 				}
 			}
-			cout << "Couldnt find target" << endl; // Should never occur, but for Debugging
+			Map->addMessage("Couldnt find target");
 			return false;
 		}
 		else
@@ -300,15 +324,15 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 
 	}
 	//if the player is going over an item (94= healthpotion, 47=longsword, 96 = dagger, 118 poison potion)
-	else if(Map->getTestRoomcell(inputX,inputY)==94 || Map->getTestRoomcell(inputX,inputY)==47 || Map->getTestRoomcell(inputX,inputY)==96 || Map->getTestRoomcell(inputX,inputY)==118)
+	else if((Map->getTestRoomcell(inputX,inputY)==94 || Map->getTestRoomcell(inputX,inputY)==47 || Map->getTestRoomcell(inputX,inputY)==96 || Map->getTestRoomcell(inputX,inputY)==118) && Target == 20)
 	{
-	    cout << "enter which inventory spot you would like to put that in" << endl;
+	    Map->addMessage("enter which inventory spot you would like to put that in");
 	    int spot= getKey();
 	    spot = spot -48; //convert from ascii code to actual number
 
 	    if(spot < 10 && spot >-1) //if a valid inventory spot
         {
-            if(pickupItem(spot, Map->getTestRoomcell(inputX,inputY))) //all the pickup logic (put into inventory)
+            if(pickupItem(spot, Map->getTestRoomcell(inputX,inputY),Map)) //all the pickup logic (put into inventory)
             {
                 //set the square under the player to be a .
                 Map->setMapTile(inputY, inputX, 1);
@@ -320,7 +344,7 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 
 	else //player hit a wall
 	{
-		if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
+		if (Type== "PLAYER"){Map->addMessage("Can't Move there");} // if they hit a wall display a message
 		getTurn(Map,Characters); //  get another input, as previous was un-playable
 		return false; // do not move the Character
 	}

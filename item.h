@@ -2,7 +2,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 #include <string>
-
+#include "map.h"
 class character;
 class player;
 
@@ -20,7 +20,7 @@ public:
     string getName();
     string getType();
 
-    virtual void use(character * target);  //virtual function for doing something with an item
+    virtual void use(character * target,map* Map);  //virtual function for doing something with an item
     virtual void place(character * target);  //put an item on the floor
 
     ~item();

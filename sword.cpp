@@ -2,6 +2,7 @@
 #include <string>
 #include "sword.h"
 #include "character.h"
+#include "map.h"
 
 #define DAGGERDAMAGE 3
 #define LONGSWORDDAMAGE 5
@@ -23,13 +24,11 @@ sword::sword(string flavourTextIn, string nameIn, string typeIn)
     isThisWielded = false;
 }
 
-void sword::use(character * target)
+void sword::use(character * target,map * Map)
 {
-    cout << "sword::use called" << endl;
     if(isThisWielded == true) //if you have this weapon on, take it off
     {
-        cout << "You are take off your "<< name << ": " << type << endl;
-
+        Map->addMessage("You take off your "+ name + ": " + type);
         //reset attack damage
         if(type == "dagger")
         {
@@ -59,14 +58,14 @@ void sword::use(character * target)
             if(isAnythingWielded<2)
             {
                 //put dagger on
-                cout << "you put on your " << name << ": " << type << endl;
+                Map->addMessage("you put on your " + name + ": " + type);
                 target->setAttackD(DAGGERDAMAGE);
                 isThisWielded=true;
                 isAnythingWielded++;
             }
             else //cant wield another weapon
             {
-                cout << "you can't wield another weapon. You can only wield 2 daggers or one longsword" << endl;
+                Map->addMessage("you can't wield another weapon. You can only wield 2 daggers or one longsword");
             }
 
         }
@@ -76,18 +75,18 @@ void sword::use(character * target)
             if(isAnythingWielded==0)
             {
                 //put longsword on
-                cout << "you put on your " << name << ": " << type << endl;
+                Map->addMessage("you put on your " + name + ": " + type);
                 target->setAttackD(LONGSWORDDAMAGE);
                 isThisWielded=true;
                 isAnythingWielded = isAnythingWielded+2;
             }
             else
             {
-                cout << "you cant wield another weapon. You can only wield 2 daggers or one longsword" << endl;
+                Map->addMessage("you cant wield another weapon. You can only wield 2 daggers or one longsword");
             }
 
         }
-        else{ cout << "unrecognized sword type: "<< type<<endl;}
+        else{Map->addMessage("unrecognized sword type: ");}
 
     }
 }

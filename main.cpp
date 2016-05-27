@@ -45,7 +45,6 @@ void GameLoop(map * Room)
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
 
-
     int EnemysRemaining = Room->getEnemyNum();
 	while(Player->getState() != "Dead") // Main Loop
 	{
@@ -54,9 +53,13 @@ void GameLoop(map * Room)
 		Room->printTestRoom(); // Prints out the Maps Updated State
 		//Print Player Info
 		cout << "Player Health: " << Player->getHealth() << " Turn Count: " << CArray[0]->TurnCount << endl;
-		cout << "Player attack damage: " << Player->getAttackD() << endl;
+		cout << "Player attack damage: " << Player->getAttackD() << "\n" << endl;
+		cout << "Message Log:" << endl;
+		for (int i = 0; i<3; i++)
+        {
+            cout << Room->Messages[i] << endl;
+        }
 		Player->displayInventory();
-
 		//------------------------------------------------------------------------
 
 		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game
@@ -73,7 +76,6 @@ void GameLoop(map * Room)
 			{
 				CArray[i]->getTurn(Room,CArray); // Get Characters Turn
 				Room->mapUpdate(CArray[i]); // Update the Map State
-
 			}
 			clear_screen(); // Clear the Screen ready for Print
 		}
@@ -91,8 +93,8 @@ void GameLoop(map * Room)
 	else
     {
         cout << "You Lose" << endl;
-
 	}
-    delete *CArray;
+    //delete *CArray;
     delete Room;
+    getKey();
 }

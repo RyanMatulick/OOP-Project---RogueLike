@@ -28,7 +28,7 @@ protected:
 	string CharacterState; // Characters state
 	string Type; // Type of Character
 
-	void Attack(character *Target); // Basic Attack Function
+	void Attack(character *Target,map *Map); // Basic Attack Function
 	bool Move(map *Map,character **Character,int inputX, int inputY,int Target); // Move or Attack
 
 	enum MOVES
@@ -44,9 +44,9 @@ protected:
 
 	int virtual Getinput(character *Player) = 0;
 
-	void useItem();     //use an item in your inventory
-	void placeItem();   //drop an item in your inventory
-	bool pickupItem(int iSpot, int iItemNo);
+	void useItem(map * Map);     //use an item in your inventory
+	void placeItem(map * Map);   //drop an item in your inventory
+	bool pickupItem(int iSpot, int iItemNo,map *Map);
 
 public:
 

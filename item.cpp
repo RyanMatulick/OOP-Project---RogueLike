@@ -1,6 +1,6 @@
 #include <iostream>
 #include "item.h"
-
+#include "map.h"
 
 using namespace std;
 
@@ -33,7 +33,7 @@ string item::getType()
     return type;
 }
 
-void item::use(character * target)
+void item::use(character * target, map* Map)
 {
     cout << "Nothing in that slot" << endl;
 }
