@@ -7,25 +7,32 @@
 #include "stdlib.h" // for rand
 #include <iostream>
 #include <string>
+#include <math.h>
 
 #include <windows.h>
 
 using namespace std;
-character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, int iAttackD,string iType)
+character::character(int iSymbol, int * Pos, int iHealth, int iAttackD,string iType)
 {
+<<<<<<< HEAD
 	Symbol = iSymbol;
 	GroundSymbol = 1; // Will be placed underneath where the character is initialised
     Health = iHealth;
     AttackD = iAttackD;
+=======
+	Symbol = iSymbol; // The Characters Symbol
+	GroundSymbol = 1; // Will be placed underneath where the character is initialised
+	Health = iHealth;  // Health of Character
+	AttackD = iAttackD; // Attack Damage of Character
+>>>>>>> refs/remotes/origin/master
 
-
-	xNext = ixLocation;
-	xCurrent = ixLocation;
-	yNext = iyLocation;
-	yCurrent = iyLocation;
-	TurnCount = 0;
-	CharacterState = "Alive";
-	Type = iType;
+	xNext = Pos[1]; // X position Character is moving too
+	xCurrent = Pos[1]; // Current X position of Character
+	yNext = Pos[0]; // Y positoin Character is moving too
+	yCurrent = Pos[0]; // Current Y position of Character
+	TurnCount = 0; // How many turns the character has had
+	CharacterState = "Alive"; // Current state of the Character
+	Type = iType; // Type of Character e.g Player/Enemy
 
 	//initialize an inventory full of potions and weapons
     for (int i=0; i<5; i++)
@@ -42,6 +49,24 @@ character::character(int iSymbol, int ixLocation, int iyLocation, int iHealth, i
 
 }
 
+<<<<<<< HEAD
+	//initialize an inventory full of potions and weapons
+    for (int i=0; i<5; i++)
+    {
+        Inventory[i] = new potion("A tasty health potion", "potion", "health");
+    }
+    for (int i=5; i<7; i++)
+    {
+        Inventory[i] = new potion("A poison potion", "potion", "poison");
+    }
+    Inventory[7] = new sword("sharp dagger", "sword", "dagger");
+    Inventory[8] = new sword("sharp dagger", "sword", "dagger");
+    Inventory[9] = new sword("shiny longsword", "sword", "longsword");
+
+}
+
+=======
+>>>>>>> refs/remotes/origin/master
 void character::setHealth(int newHealth)
 {
     Health = Health + newHealth; //add on how much new health we want
@@ -63,7 +88,10 @@ void character::useItem()
         Inventory[itemToUse]->use(this);
     }
     else {cout << "Not an item number!";}
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 }
 
 void character::placeItem()
@@ -75,24 +103,31 @@ void character::placeItem()
     itemToPlace = itemToPlace - 48;
     if(itemToPlace<10 && itemToPlace>-1)
     {
+<<<<<<< HEAD
         Inventory[itemToPlace]->place(this, Inventory[itemToPlace]->getType());
         Inventory[itemToPlace] = new item("","","");
     }
     else {cout << "Not an item number!";}
 
 
+=======
+        Inventory[itemToPlace]->place(this);
+        Inventory[itemToPlace] = new item("","","");
+    }
+    else {cout << "Not an item number!";}
+>>>>>>> refs/remotes/origin/master
 }
 
 
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
 {
 	MOVES Moves = NO_MOVE;
-	int Input;
-	int Target;
+	int Input; // Player Input or Enemy Generated Input
+	int Target; // Enemy of current Character
 	if(Type == "PLAYER")
 	{
 		Target = 20; // HARDCODED current enemy
-		Input = int(getKey());
+		Input = Getinput(Characters[0]);
 		switch(Input)
 		{
 			case 119: Moves = UP_INTERACTION; break;   // ascii 'w'
@@ -107,8 +142,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	else if(Type == "ENEMY")
 	{
 		Target = 10; // HARDCODED current player
-		Input = rand() % 4 + 1;
-		//Input = 5;
+		Input = Getinput(Characters[0]); // AI Turn
 		switch(Input)
 		{
 			case 1: Moves = UP_INTERACTION; break;
@@ -118,7 +152,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 			default: break;
 		}
 	}
-	yCurrent = yNext;
+	yCurrent = yNext; // Reset From Last Turn
 	xCurrent = xNext;
 	switch (Moves)
 	{
@@ -143,11 +177,16 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 	case NO_MOVE:  // If Invalid key is pressed, get another.
 	    Sleep(5000);
 		cout <<"Invalid Key" << endl;
-		//getTurn(Map,Characters);
+		getTurn(Map,Characters);
 		break;
 	}
 }
 
+
+int character::Getinput(character *Player)
+{
+	return 0;
+}
 
 // getters and setters -----------------------------------------------------------
 string character::getState()
@@ -199,8 +238,16 @@ void character::setState(string State)
 {
 	CharacterState = State;
 }
+<<<<<<< HEAD
 
 void character::setGroundSymbol(int iSymbol)
+=======
+void character::setSymbol(int iSymbol)
+{
+	Symbol = iSymbol;
+}
+void character::setGroundSymbol(char iSymbol)
+>>>>>>> refs/remotes/origin/master
 {
 	GroundSymbol = iSymbol;
 }
@@ -231,7 +278,7 @@ void character::setAttackD(int extraAttack)
 
 //-------------------------------------------------------------------------------------------------
 
-void character::Attack(character *Target)
+void character::Attack(character *Target) // Implement Basic Attack
 {
 	Target->Health -= AttackD;
 }
@@ -273,22 +320,29 @@ bool character::pickupItem(int iSpot, int iItemNo)
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
+<<<<<<< HEAD
 	if (Map->getTestRoomcell(inputX, inputY) < 2) // if the player doesn't hit a wall
+=======
+	// If the Character does not hit a wall, or Character of the same type
+	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol)
+>>>>>>> refs/remotes/origin/master
 	{
 		TurnCount++; // we will either move or attack;
 		if(Map->getTestRoomcell(inputX, inputY) == Target) // if the next move is onto an enemy
 		{
-			for (int i = 0; i< 2; i++) // check all charcters in array to find the one that is in target square
+			for (int i = 0; i< Map->enemyNum+1; i++) // check all charcters in array to find the one that is in the target square
 			{
-				if (Characters[i]->getX() == inputX)
+				if (Characters[i]->getNextY() == inputY)
 				{
-					if(Characters[i]->getY() == inputY)
+					if(Characters[i]->getNextX() == inputX)
 					{
-						Attack(Characters[i]);
-						return false; // do not move the player
+						Attack(Characters[i]); // Attack the Target
+						return false; // do not move the Character
 					}
 				}
 			}
+			cout << "Couldnt find target" << endl; // Should never occur, but for Debugging
+			return false;
 		}
 		else
 		{
@@ -317,9 +371,9 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 
 	else //player hit a wall
 	{
-		cout << "Can't Move there" << endl; // if they hit a wall display message
+		if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
 		getTurn(Map,Characters); //  get another input, as previous was un-playable
-		return false; // do not move the player
+		return false; // do not move the Character
 	}
 
 }

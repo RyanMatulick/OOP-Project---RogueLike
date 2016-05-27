@@ -1,12 +1,23 @@
+<<<<<<< HEAD
 #include <string>
 #include "sword.h"
+=======
+#include <iostream>
+#include <string>
+#include "sword.h"
+#include "character.h"
+>>>>>>> refs/remotes/origin/master
 
 #define DAGGERDAMAGE 3
 #define LONGSWORDDAMAGE 5
 
 using namespace std;
 
+<<<<<<< HEAD
 int sword::isAnythingWielded=0; //do we have any weapons wielded?
+=======
+int sword::isAnythingWielded=0;
+>>>>>>> refs/remotes/origin/master
 
 sword::sword()
 {
@@ -23,6 +34,10 @@ sword::sword(string flavourTextIn, string nameIn, string typeIn)
 
 void sword::use(character * target)
 {
+<<<<<<< HEAD
+=======
+    cout << "sword::use called" << endl;
+>>>>>>> refs/remotes/origin/master
     if(isThisWielded == true) //if you have this weapon on, take it off
     {
         cout << "You are take off your "<< name << ": " << type << endl;
@@ -89,6 +104,7 @@ void sword::use(character * target)
     }
 }
 
+<<<<<<< HEAD
 void sword::place(character * target, string dType)
 {
     if(dType=="longsword")
@@ -100,6 +116,11 @@ void sword::place(character * target, string dType)
         target->setGroundSymbol(96);
     }
     else {cout<<"Unknown type"<<endl;}
+=======
+void sword::place(character * target)
+{
+    target->setGroundSymbol(47);
+>>>>>>> refs/remotes/origin/master
 }
 
 sword::~sword()
