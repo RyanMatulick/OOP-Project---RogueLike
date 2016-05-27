@@ -27,12 +27,14 @@ public:
 	int* getStartPos();
 	void printWall(int j,int i);
 	int enemyNum;
+	void setMapTile(int yPos, int xPos, int newTileType);
 
 private:
 
 	//number of rooms high and wide the map is
 	int width;
 	int height;
+
 
 
 	//TEMP

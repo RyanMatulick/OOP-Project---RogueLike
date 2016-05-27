@@ -7,17 +7,21 @@
 
 #include <ctime>
 #include <stdlib.h>
-void GameLoop(map * Room);
 
+void GameLoop(map * Room);
+int seed;
+using namespace std;
 int main()
 {
-	int seed;
+
 	cout << "seed: ";
 	cin >> seed; // gets seed
-	if (seed > 0) {srand(seed);} // 0 generates random seed
-	else {srand(time(NULL));} // set the random seed
+	if (seed <= 0) {seed = time(NULL);} // 0 generates random seed
+	srand(seed);  // set the random seed
 	clear_screen(); // Clear the current terminal
-	system("mode 350"); // Windows Only for full screen
+	#ifdef _WIN32
+        system("mode 350"); // Windows Only for full screen
+    #endif
 
 	map * Room; // declare First Room
 	Room = new map(80, 30, rand() % 7 + 3); // Y Size,X Size, Number of Enemies
@@ -41,15 +45,18 @@ void GameLoop(map * Room)
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
 
+
     int EnemysRemaining = Room->getEnemyNum();
 	while(Player->getState() != "Dead") // Main Loop
 	{
 	    // For Somthing to be displayed it must be placed here ------------------------
+	    cout << seed << endl;
 		Room->printTestRoom(); // Prints out the Maps Updated State
 		//Print Player Info
 		cout << "Player Health: " << Player->getHealth() << " Turn Count: " << CArray[0]->TurnCount << endl;
 		cout << "Player attack damage: " << Player->getAttackD() << endl;
 		Player->displayInventory();
+
 		//------------------------------------------------------------------------
 
 		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game

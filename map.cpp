@@ -250,6 +250,10 @@ int* map::getStartPos()
 
 }
 
+void map::setMapTile(int yPos, int xPos, int newTileType)
+{
+    TestRoom[yPos][xPos] = newTileType;
+}
 
 //Ryan's stuff
 //This is the upadate for all Objects (Characters,Items,Traps etc.) on the map
@@ -268,7 +272,7 @@ char map::getTestRoomcell(int x, int y) // some form of this is needed to check 
 	return TestRoom[y][x];
 }
 
-void map::printTestRoom() 
+void map::printTestRoom()
 {
 	for (int j = 0; j<height; j++)
 	{

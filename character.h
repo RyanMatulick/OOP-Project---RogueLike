@@ -46,6 +46,7 @@ protected:
 
 	void useItem();     //use an item in your inventory
 	void placeItem();   //drop an item in your inventory
+	bool pickupItem(int iSpot, int iItemNo);
 
 public:
 

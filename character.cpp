@@ -78,7 +78,6 @@ void character::placeItem()
     else {cout << "Not an item number!";}
 }
 
-
 void character::getTurn(map *Map, character **Characters) // will change to room Need to put in a player class
 {
 	MOVES Moves = NO_MOVE;
@@ -237,11 +236,45 @@ void character::Attack(character *Target) // Implement Basic Attack
 	Target->Health -= AttackD;
 }
 
+//put an item into the inventory in place iSopt of typek iItemNo
+bool character::pickupItem(int iSpot, int iItemNo)
+{
+    if(Inventory[iSpot]->getName()=="")//if selected slot is empty
+    {
+        switch(iItemNo)
+        {
+            case 47:
+            Inventory[iSpot] = new sword("shiny longsword", "sword", "longsword");
+            return true;
+            break;
+            case 96:
+            Inventory[iSpot] = new sword("sharp dagger", "sword", "dagger");
+            return true;
+            break;
+            case 94:
+            Inventory[iSpot] = new potion("A tasty health potion", "potion", "health");
+            return true;
+            break;
+            case 118:
+            Inventory[iSpot] = new potion("A poison potion", "potion", "poison");
+            return true;;
+            break;
+            default:
+            return false;
+        }
+
+    }
+    else
+    {
+        cout<<"this spot already contains a: " << Inventory[iSpot]->getName() <<": " <<Inventory[iSpot]->getType()<<endl;
+        return false;
+    }
+}
 
 bool character::Move(map *Map,character **Characters,int inputX, int inputY, int Target)
 {
 	// If the Character does not hit a wall, or Character of the same type
-	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol)
+	if (Map->getTestRoomcell(inputX, inputY) != 2 && Map->getTestRoomcell(inputX, inputY) != Symbol && (Map->getTestRoomcell(inputX,inputY)!=94 && Map->getTestRoomcell(inputX,inputY)!=47 && Map->getTestRoomcell(inputX,inputY)!=96 && Map->getTestRoomcell(inputX,inputY)!=118))
 	{
 		TurnCount++; // we will either move or attack;
 		if(Map->getTestRoomcell(inputX, inputY) == Target) // if the next move is onto an enemy
@@ -266,7 +299,26 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 		}
 
 	}
-	else
+	//if the player is going over an item (94= healthpotion, 47=longsword, 96 = dagger, 118 poison potion)
+	else if(Map->getTestRoomcell(inputX,inputY)==94 || Map->getTestRoomcell(inputX,inputY)==47 || Map->getTestRoomcell(inputX,inputY)==96 || Map->getTestRoomcell(inputX,inputY)==118)
+	{
+	    cout << "enter which inventory spot you would like to put that in" << endl;
+	    int spot= getKey();
+	    spot = spot -48; //convert from ascii code to actual number
+
+	    if(spot < 10 && spot >-1) //if a valid inventory spot
+        {
+            if(pickupItem(spot, Map->getTestRoomcell(inputX,inputY))) //all the pickup logic (put into inventory)
+            {
+                //set the square under the player to be a .
+                Map->setMapTile(inputY, inputX, 1);
+            }
+        }
+        return true; //move onto item
+
+	}
+
+	else //player hit a wall
 	{
 		if (Type== "PLAYER"){cout << "Can't Move there" << endl;} // if they hit a wall display a message
 		getTurn(Map,Characters); //  get another input, as previous was un-playable
