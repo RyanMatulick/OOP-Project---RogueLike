@@ -19,7 +19,7 @@ public:
     ~sword();
 
 private:
-    bool isThisWielded; //is this particular sword in had?
+    bool isThisWielded; //is this particular sword in hand?
 
 };
 #endif // SWORD_H

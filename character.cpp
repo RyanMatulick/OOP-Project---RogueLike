@@ -107,7 +107,7 @@ void character::getTurn(map *Map, character **Characters) // will change to room
 		{
 			case 1: Moves = UP_INTERACTION; break;
 			case 2: Moves = DOWN_INTERACTION; break;
-			case 3:  Moves = LEFT_INTERACTION; break;
+			case 3: Moves = LEFT_INTERACTION; break;
 			case 4: Moves = RIGHT_INTERACTION; break;
 			default: break;
 		}
@@ -278,4 +278,5 @@ bool character::Move(map *Map,character **Characters,int inputX, int inputY, int
 
 character::~character()
 {
+    delete Inventory;
 }

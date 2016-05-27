@@ -1,7 +1,6 @@
 #include "enemy.h"
-#include <iostream>
 #include <math.h>
-//<windows.h>
+#include <stdlib.h>
 //Creates an Enemy Object
 enemy::enemy(int iSymbol, int * Pos,int iHealth, int iAttackD):character(iSymbol, Pos, iHealth, iAttackD,"ENEMY")
 {
@@ -20,9 +19,15 @@ int enemy::Getinput(character *Player)
 	int DistY = PlayerY - EnemyY;
 
 	int Distance = int(sqrt(DistX*DistX + DistY*DistY)); // Distance between enemy and player
-	
-	if (TurnCount != LastTurn) { LastMove = -1; } // Check that the Character has moved
 
+	if (TurnCount == LastTurn)
+    {
+        return rand() % 4 + 1;// If a move toward the player cannot be found, move randomly } // Check that the Character has moved
+    }
+    else
+    {
+        LastMove = -1;
+    }
 	if (Distance < 6 )
 	{
 		if (DistX < 0 && LastMove !=3) // Left
@@ -50,8 +55,8 @@ int enemy::Getinput(character *Player)
 			return 2;
 		}
 	}
+    return rand() % 4 + 1; // If a move toward the player cannot be found, move randomly
 
-	return rand() % 4 + 1; // If a move toward the player cannot be found, move randomly
 }
 enemy::~enemy()
 {

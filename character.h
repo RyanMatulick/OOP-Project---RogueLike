@@ -41,14 +41,17 @@ protected:
 		USE_ITEM,
 		PLACE_ITEM,
 	};
-	
-	int virtual Getinput(character *Player);
+
+	int virtual Getinput(character *Player) = 0;
+
+	void useItem();     //use an item in your inventory
+	void placeItem();   //drop an item in your inventory
 
 public:
 
 	character(int Symbol, int * Pos,int Health, int AttackD,string Type);
+    void getTurn(map* Map, character **Character); // change to room
 
-	void getTurn(map* Map, character **Character); // change to room
 
 	string getState(); // get Characters State
 	char getSymbol(); // get Characters Symbol
@@ -72,9 +75,6 @@ public:
 	void setAttackD(int extraAttack);
 
 	void setHealth(int newHealth);  //externally update the player health.
-
-	void useItem();     //use an item in your inventory
-	void placeItem();   //drop an item in your inventory
 
 
 	int TurnCount;

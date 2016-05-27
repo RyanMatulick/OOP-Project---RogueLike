@@ -17,10 +17,10 @@ int main()
 	if (seed > 0) {srand(seed);} // 0 generates random seed
 	else {srand(time(NULL));} // set the random seed
 	clear_screen(); // Clear the current terminal
-	//system("mode 350"); // Windows Only for full screen
+	system("mode 350"); // Windows Only for full screen
 
 	map * Room; // declare First Room
-	Room = new map(80, 30, rand() % 1 + 3); // Y Size,X Size, Number of Enemies
+	Room = new map(80, 30, rand() % 7 + 3); // Y Size,X Size, Number of Enemies
 	GameLoop(Room); // Main Game Loop
 }
 
@@ -28,7 +28,7 @@ void GameLoop(map * Room)
 {
 	Room->generateMap();// Generate a random map
 
-	player * Player = new player(10,Room->getStartPos(),50,12); // Initialise the Player
+	player * Player = new player(10,Room->getStartPos(),50,7); // Initialise the Player
 
 	character * CArray[11];//maximum 10 enemies + player
 	CArray[0] = Player; // Place Player in First Spot
@@ -36,15 +36,22 @@ void GameLoop(map * Room)
 
 	for (int i=1; i<Room->getEnemyNum()+1;i++)
 	{
-		enemy * Enemy = new enemy(20,Room->getStartPos(),30,7); // Initialise the Enemies
+		enemy * Enemy = new enemy(20,Room->getStartPos(),20,8); // Initialise the Enemies
 		CArray[i] = Enemy; // Place Enemy in Array of Characters
 		Room->mapUpdate(CArray[i]); // Place Enemy on Map
 	}
 
-	Room->printTestRoom(); //print Start State
     int EnemysRemaining = Room->getEnemyNum();
 	while(Player->getState() != "Dead") // Main Loop
 	{
+	    // For Somthing to be displayed it must be placed here ------------------------
+		Room->printTestRoom(); // Prints out the Maps Updated State
+		//Print Player Info
+		cout << "Player Health: " << Player->getHealth() << " Turn Count: " << CArray[0]->TurnCount << endl;
+		cout << "Player attack damage: " << Player->getAttackD() << endl;
+		Player->displayInventory();
+		//------------------------------------------------------------------------
+
 		for (int i = 0; i<Room->getEnemyNum()+1; i++) // for Every Character in game
 		{
 			//If the Character has No Health and is not already dead
@@ -63,25 +70,22 @@ void GameLoop(map * Room)
 			}
 			clear_screen(); // Clear the Screen ready for Print
 		}
-		// For Somthing to be displayed it must be placed here -----------
-		Room->printTestRoom(); // Prints out the Maps Updated State
-		//Print Player Info
-		cout << "Player Health: " << Player->getHealth() << " Turn Count: " << CArray[0]->TurnCount << endl;
-		cout << "Player attack damage: " << Player->getAttackD() << endl;
-		Player->displayInventory();
-		for (int i = 1; i<Room->getEnemyNum()+1; i++) // for size of character array
-		{
-			//Display Enemy Info DEBUGGING
-			cout << "Enemy #" << i << " Health: " << CArray[i]->getHealth() << " Turn Count: " << CArray[i]->TurnCount <<endl;
-		}
 		if (EnemysRemaining == 0)
         {
-            cout << "YOU WIN" << endl;
+            break;
         }
-		//--------------------------------------------------------
 	}
-	//If program is here the player has died
+	//If program is here the player has died or won the game
 	clear_screen();
-	cout << "You Lose" << endl;
+	if (EnemysRemaining == 0)
+    {
+        cout << "YOU WIN" << endl;
+    }
+	else
+    {
+        cout << "You Lose" << endl;
 
+	}
+    delete *CArray;
+    delete Room;
 }
